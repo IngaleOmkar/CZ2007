@@ -80,7 +80,6 @@ CREATE TABLE ProductType(
     parentID int DEFAULT -1,
     PRIMARY KEY(productTypeID),
     FOREIGN KEY (parentID) REFERENCES ProductType(productTypeID)
-    ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE Product(
@@ -134,3 +133,5 @@ CREATE TABLE OrderItem(
     FOREIGN KEY(productID, shopID) REFERENCES Product(productID, shopID)
     ON UPDATE CASCADE ON DELETE CASCADE
 );
+
+GO  
