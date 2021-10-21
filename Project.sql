@@ -63,7 +63,7 @@ CREATE TABLE Payment(
 CREATE TABLE Shipment(
     shipmentID int NOT NULL IDENTITY(1,1),
     shipment_date DATE NOT NULL,
-    trackingNum int NOT NULL IDENTITY(1,1),
+    trackingNum int NOT NULL,
     PRIMARY KEY(shipmentID),
 );
 
