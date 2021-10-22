@@ -90,7 +90,7 @@ CREATE TABLE Product(
     price REAL NOT NULL DEFAULT 0,
     pDescription VARCHAR(100) DEFAULT NULL,
     productTypeID int NOT NULL,
-    size int NOT NULL DEFAULT 0,
+    size VARCHAR(10) NOT NULL DEFAULT NULL,
     PRIMARY KEY(productID, shopID),
     FOREIGN KEY (shopID) REFERENCES Shop(shopID),
     FOREIGN KEY (productTypeID) REFERENCES ProductType(productTypeID)
@@ -121,7 +121,7 @@ CREATE TABLE OrderItem(
     orderID int NOT NULL,
     shopID int NOT NULL,
     sequenceNum int NOT NULL IDENTITY(1,1),
-    shipmentId int NOT NULL,
+    shipmentId int,
     productID int NOT NULL,
     quantity int DEFAULT 1,
     unitPrice REAL NOT NULL,

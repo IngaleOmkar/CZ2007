@@ -48,10 +48,3 @@ VALUES
     ('Microsoft', 25, 7),
     ('Apple', 26, 7),
     ('Google', 27, 7);
-
-
-
-
-
-
-
