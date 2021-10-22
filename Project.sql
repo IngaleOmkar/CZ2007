@@ -76,8 +76,8 @@ CREATE TABLE Shop(
 CREATE TABLE ProductType(
     ptDescription VARCHAR(50) NOT NULL,
     productTypeID int NOT NULL,
-    -- (-1)- no parent
-    parentID int DEFAULT -1,
+    -- NULL- no parent
+    parentID int DEFAULT NULL,
     PRIMARY KEY(productTypeID),
     FOREIGN KEY (parentID) REFERENCES ProductType(productTypeID)
 );
