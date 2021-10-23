@@ -1,4 +1,7 @@
-import customerGenerator
+'''
+Create static data in CSV format for Customer
+'''
+
 from faker import Faker
 from random_username.generate import generate_username
 import random
