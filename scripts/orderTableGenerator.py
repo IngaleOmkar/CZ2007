@@ -2,6 +2,7 @@ import pyodbc
 import datetime
 import random
 
+
 def generate_orderDate():
     sDate = datetime.date(2021, 9, 1)
     eDate = datetime.date(2021, 10, 24)
@@ -13,16 +14,17 @@ def generate_orderDate():
 
     return randDate
 
+
 def generate_orderStatus(orderDate):
     difference = datetime.date.today() - orderDate
     difference = difference.days
-    print(datetime.date.today(), orderDate, difference)
     if difference < 3:
         return "0"
     elif difference >= 3 and difference < 30:
         return "1"
     else:
         return "2"
+
 
 if __name__ == '__main__':
     cnxn = pyodbc.connect(
@@ -39,7 +41,8 @@ if __name__ == '__main__':
 
         params = [custID, orderDate, orderStatus]
 
-        cursor.execute('INSERT INTO dbo.OrderTable(custID, orderDate, orderStatus) VALUES(?, ?, ?)', params)
+        cursor.execute(
+            'INSERT INTO dbo.OrderTable(custID, orderDate, orderStatus) VALUES(?, ?, ?)', params)
 
         cnxn.commit()
 
