@@ -1,3 +1,7 @@
+'''
+MAIN SCRIPT
+'''
+
 import pyodbc
 from populateCustomer import populateCustomer
 from populateCreditCard import populateCreditCard

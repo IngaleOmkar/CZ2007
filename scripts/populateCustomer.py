@@ -1,6 +1,7 @@
 import pyodbc
 import csv
 
+
 class populateCustomer():
     def __init__(self, cursor, cnxn, filename):
         self.cursor = cursor
@@ -21,7 +22,8 @@ class populateCustomer():
                 address = row[4]
                 password = row[5]
 
-                params = [email, username, name, phoneNumber, address, password]
+                params = [email, username, name,
+                          phoneNumber, address, password]
 
                 self.cursor.execute(
                     "INSERT INTO dbo.Customer(emailAddress, username, fullName, phoneNumber, userAddress, userPassword) VALUES(?, ?, ?, ?, ?, ?)", params)
