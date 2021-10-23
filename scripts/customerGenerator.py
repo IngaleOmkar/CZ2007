@@ -31,14 +31,9 @@ def generate_password():
     for i in range(pwLength):
         password += random.choice(characters)
 
-    # random.shuffle(password)
-
     return str(password)
 
 if __name__ == "__main__":
-    # connection = mysql.connector.connect(host="localhost", user="root", password="")
-    # cursor = connection.cursor()
-
     cnxn = pyodbc.connect(
         'DRIVER={ODBC Driver 17 for SQL Server};SERVER=localhost;DATABASE=Project;Trusted_Connection=yes;')
 
