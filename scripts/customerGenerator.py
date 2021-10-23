@@ -10,7 +10,8 @@ if __name__ == "__main__":
     with open('scripts/customer.csv', 'r', newline='') as f:
         reader = csv.reader(f)
         for row in reader:
-            print(', '.join(row))
+            if row[0] == "Name":
+                continue
             name = row[0]
             phoneNumber = row[1]
             username = row[2]

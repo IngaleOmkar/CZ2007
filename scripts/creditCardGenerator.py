@@ -2,7 +2,6 @@ import pyodbc
 import datetime
 import random
 
-
 def generate_expiryDate():
     sDate = datetime.date(2021, 12, 30)
     eDate = datetime.date(2024, 12, 30)

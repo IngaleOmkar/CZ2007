@@ -24,7 +24,7 @@ CREATE TABLE CreditCard(
     ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE Order_Table(
+CREATE TABLE OrderTable(
     orderID int NOT NULL identity(1,1),
     custID int NOT NULL,
     orderDate DATE NOT NULL DEFAULT GETDATE(),
