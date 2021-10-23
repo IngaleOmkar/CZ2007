@@ -28,8 +28,6 @@ if __name__ == '__main__':
 
     for idx, row in enumerate(cursor.fetchall()):
         expiryDate = generate_expiryDate()
-        print(idx, row.Cust_ID)
-        print(expiryDate)
 
         cardNum = generate_cardNumber()
         if cardNum in usedCardNumbers:
