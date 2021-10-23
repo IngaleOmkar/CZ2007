@@ -42,7 +42,7 @@ CREATE TABLE Invoice(
     orderID int NOT NULL,
     -- 0 -not paid, 1 - partially paid, 2 - fully paid
     invoice_status SMALLINT NOT NULL DEFAULT 0,
-    invoice_date DATE NOT NULL,
+    invoice_date DATE NOT NULL DEFAULT GETDATE(),
     PRIMARY KEY(invoiceNum),
     FOREIGN KEY(orderID) REFERENCES Order_Table(orderID)
     ON UPDATE CASCADE ON DELETE CASCADE
