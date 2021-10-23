@@ -36,6 +36,11 @@ if __name__ == '__main__':
         custID = row.custID
         orderDate = generate_orderDate()
         orderStatus = generate_orderStatus(orderDate)
-        print(orderStatus)
 
-        cursor.execute('INSERT INTO dbo.OrderTable')
+        params = [custID, orderDate, orderStatus]
+
+        cursor.execute('INSERT INTO dbo.OrderTable(custID, orderDate, orderStatus) VALUES(?, ?, ?)', params)
+
+        cnxn.commit()
+
+    print("Completed")
