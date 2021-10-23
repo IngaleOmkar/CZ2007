@@ -2,6 +2,7 @@ import pyodbc
 import datetime
 import random
 
+
 def generate_expiryDate():
     sDate = datetime.date(2021, 12, 30)
     eDate = datetime.date(2024, 12, 30)
@@ -13,8 +14,10 @@ def generate_expiryDate():
 
     return randDate
 
+
 def generate_cardNumber():
-    return random.randint(10000000,99999999)
+    return random.randint(10000000, 99999999)
+
 
 if __name__ == '__main__':
     cnxn = pyodbc.connect(
@@ -22,7 +25,7 @@ if __name__ == '__main__':
 
     cursor = cnxn.cursor()
 
-    cursor.execute("SELECT Cust_ID FROM dbo.Customer")
+    cursor.execute("SELECT custID FROM dbo.Customer")
 
     usedCardNumbers = []
 
@@ -36,12 +39,10 @@ if __name__ == '__main__':
         else:
             usedCardNumbers.append(cardNum)
 
-        params = [usedCardNumbers[idx], row.Cust_ID, expiryDate]
+        params = [usedCardNumbers[idx], row.custID, expiryDate]
 
-        cursor.execute("INSERT INTO dbo.CreditCard(CardNumber, Cust_ID, ExpiryDate) VALUES(?, ?, ?)", params)
+        cursor.execute(
+            "INSERT INTO dbo.CreditCard(cardNumber, custID, expiryDate) VALUES(?, ?, ?)", params)
         cnxn.commit()
 
     print("Completed")
-
-
-
