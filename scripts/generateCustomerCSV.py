@@ -40,7 +40,7 @@ def generate_password():
 
     return str(password)
 
-def writeCustomerToTxt(row, flag):
+def writeCustomer(row, flag):
     if flag == 0:
         with open('scripts/customer.csv', 'w', newline='') as f:
             writer = csv.writer(f)
@@ -50,17 +50,6 @@ def writeCustomerToTxt(row, flag):
         with open('scripts/customer.csv', 'a', newline='') as f:
             writer = csv.writer(f)
             writer.writerow([row[0], row[1], row[2], row[3], row[4], row[5]])
-
-def writeCreditCardToTxt(row, flag):
-    if flag == 0:
-        with open('scripts/creditCard.csv', 'w', newline='') as f:
-            writer = csv.writer(f)
-            writer.writerow(
-                ["CardNum", "CustID", "expiry"])
-    else:
-        with open('scripts/customer.csv', 'a', newline='') as f:
-            writer = csv.writer(f)
-            writer.writerow([row[0], row[1], row[2]])
 
 if __name__ == '__main__':
     fake = Faker("en_US")
