@@ -4,6 +4,7 @@ import string
 from random_username.generate import generate_username
 import pyodbc
 
+
 def generate_email(i: int, name: str):
     domain = ["@outlook.com", "@gmail.com", "@yahoo.com"]
 
@@ -16,9 +17,11 @@ def generate_email(i: int, name: str):
     else:
         return (name + domain[2])
 
+
 def generate_phoneNum():
     firstNum = random.randint(8, 9)
     return int(str(firstNum) + str(random.randint(1000000, 9999999)))
+
 
 def generate_password():
     password = ""
@@ -32,6 +35,7 @@ def generate_password():
         password += random.choice(characters)
 
     return str(password)
+
 
 if __name__ == "__main__":
     cnxn = pyodbc.connect(
@@ -62,8 +66,7 @@ if __name__ == "__main__":
         params = [email, username, name, phoneNumList[i], address, password]
 
         cursor.execute(
-            "INSERT INTO dbo.Customer(email_address, username, full_name, phone_number, user_address, user_password) VALUES(?, ?, ?, ?, ?, ?)", params)
+            "INSERT INTO dbo.Customer(emailAddress, username, fullName, phoneNumber, userAddress, userPassword) VALUES(?, ?, ?, ?, ?, ?)", params)
         cnxn.commit()
 
     print("Completed")
-    

@@ -1,12 +1,10 @@
 /* Creating the database */
 CREATE DATABASE Project;
-GO
 
 USE Project;
-GO
 
 CREATE TABLE Customer(
-    Cust_ID int NOT NULL IDENTITY(1,1),
+    Cust_ID int NOT NULL auto_increment,
     email_address VARCHAR(50) NOT NULL,
     username VARCHAR(50) NOT NULL,
     full_name VARCHAR(100) NOT NULL,
@@ -27,7 +25,7 @@ CREATE TABLE CreditCard(
 );
 
 CREATE TABLE Order_Table(
-    orderID int NOT NULL IDENTITY(1,1),
+    orderID int NOT NULL auto_increment,
     Cust_ID int NOT NULL,
     order_date DATE NOT NULL,
     -- 0 - processing, 1 - completed, 2 - canceled 
@@ -38,18 +36,18 @@ CREATE TABLE Order_Table(
 );
 
 CREATE TABLE Invoice(
-    invoiceNum int NOT NULL IDENTITY(1,1),
+    invoiceNum int NOT NULL auto_increment,
     orderID int NOT NULL,
     -- 0 -not paid, 1 - partially paid, 2 - fully paid
     invoice_status SMALLINT NOT NULL DEFAULT 0,
-    invoice_date DATE NOT NULL DEFAULT GETDATE(),
+    invoice_date DATE NOT NULL,
     PRIMARY KEY(invoiceNum),
     FOREIGN KEY(orderID) REFERENCES Order_Table(orderID)
     ON UPDATE CASCADE ON DELETE CASCADE
 );
 
 CREATE TABLE Payment(
-    paymentID int NOT NULL IDENTITY(1,1),
+    paymentID int NOT NULL auto_increment,
     invoice_number int NOT NULL,
     CardNumber int NOT NULL,
     amount REAL NOT NULL DEFAULT 0,
@@ -61,14 +59,14 @@ CREATE TABLE Payment(
 );
 
 CREATE TABLE Shipment(
-    shipmentID int NOT NULL IDENTITY(1,1),
+    shipmentID int NOT NULL auto_increment,
     shipment_date DATE NOT NULL,
     trackingNum int NOT NULL,
     PRIMARY KEY(shipmentID),
 );
 
 CREATE TABLE Shop(
-    shopID int NOT NULL IDENTITY(1,1),
+    shopID int NOT NULL auto_increment,
     sName VARCHAR(20) NOT NULL,
     PRIMARY KEY(shopID)
 );
@@ -83,7 +81,7 @@ CREATE TABLE ProductType(
 );
 
 CREATE TABLE Product(
-    productID int NOT NULL IDENTITY(1,1),
+    productID int NOT NULL auto_increment,
     shopID int NOT NULL,
     pName VARCHAR(20) NOT NULL,
     color VARCHAR(20) NOT NULL,
@@ -100,7 +98,7 @@ CREATE TABLE Product(
 
 CREATE TABLE Photo(
     shopId int NOT NULL,
-    photoID int NOT NULL IDENTITY(1,1),
+    photoID int NOT NULL auto_increment,
     content IMAGE NOT NULL,
     productID int NOT NULL,
     PRIMARY KEY(photoID),
@@ -120,7 +118,7 @@ CREATE TABLE RestrictedTo(
 CREATE TABLE OrderItem(
     orderID int NOT NULL,
     shopID int NOT NULL,
-    sequenceNum int NOT NULL IDENTITY(1,1),
+    sequenceNum int NOT NULL auto_increment,
     shipmentId int,
     productID int NOT NULL,
     quantity int DEFAULT 1,
@@ -133,5 +131,3 @@ CREATE TABLE OrderItem(
     FOREIGN KEY(productID, shopID) REFERENCES Product(productID, shopID)
     ON UPDATE CASCADE ON DELETE CASCADE
 );
-
-GO  
