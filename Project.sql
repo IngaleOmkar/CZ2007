@@ -32,7 +32,7 @@ CREATE TABLE OrderTable(
     PRIMARY KEY (orderID),
     FOREIGN KEY(custID) REFERENCES Customer(custID)
     ON UPDATE CASCADE ON DELETE CASCADE,
-    CHECK(orderStatus > 0 AND orderStatus < 3) -- itemStatus must be within 0 and 2
+    CHECK(orderStatus >= 0 AND orderStatus < 3) -- itemStatus must be within 0 and 2
 );
 
 CREATE TABLE Invoice(
@@ -41,9 +41,9 @@ CREATE TABLE Invoice(
     invoiceStatus SMALLINT NOT NULL DEFAULT 0, -- 0 -not paid, 1 - partially paid, 2 - fully paid
     invoiceDate DATE NOT NULL DEFAULT GETDATE(),
     PRIMARY KEY(invoiceNum),
-    FOREIGN KEY(orderID) REFERENCES Order_Table(orderID)
+    FOREIGN KEY(orderID) REFERENCES OrderTable(orderID)
     ON UPDATE CASCADE ON DELETE CASCADE,
-    CHECK(invoiceStatus > 0 AND invoiceStatus < 3) -- invoiceStatus must be within 0 and 2
+    CHECK(invoiceStatus >= 0 AND invoiceStatus < 3) -- invoiceStatus must be within 0 and 2
 );
 
 CREATE TABLE Payment(
@@ -126,11 +126,11 @@ CREATE TABLE OrderItem(
     unitPrice REAL NOT NULL DEFAULT 0,
     itemStatus SMALLINT DEFAULT 0, -- 0 - processing, 1 - Shipped, 2 - out of stock
     PRIMARY KEY(orderID, sequenceNum),
-    FOREIGN KEY(orderID) REFERENCES Order_Table(orderID),
+    FOREIGN KEY(orderID) REFERENCES OrderTable(orderID),
     FOREIGN KEY(shipmentId) REFERENCES Shipment(shipmentID),
     FOREIGN KEY(productID, shopID) REFERENCES Product(productID, shopID)
     ON UPDATE CASCADE ON DELETE CASCADE,
     CHECK(quantity > 0), -- must at least have 1 qty
     CHECK(unitPrice > 0), -- unit price cannot be below 0
-    CHECK(itemStatus > 0 AND itemStatus < 3) -- itemStatus must be within 0 and 2
+    CHECK(itemStatus >= 0 AND itemStatus < 3) -- itemStatus must be within 0 and 2
 );
