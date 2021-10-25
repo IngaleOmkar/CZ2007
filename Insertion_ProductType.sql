@@ -1,18 +1,20 @@
 USE Project
 GO
 
+-- Highest level example: edible items->human food->fast food/snacks->drinks alcoholic/non alcoholic
+
 INSERT INTO dbo.ProductType(
     ptDescription, productTypeID, parentID
     )
 VALUES
     -- Main Categories
-    ('Phone', 1, NULL),
-    ('Television Set', 2, NULL),
-    ('Gaming Console', 3, NULL),
+    ('Phone', 1, 32),
+    ('Television Set', 2, 32),
+    ('Gaming Console', 3, 32),
     ('Furniture', 4, NULL),
     ('Edible Items', 5, NULL),
     ('Stationary', 6, NULL),
-    ('Laptop', 7, NULL),
+    ('Laptop', 7, 32),
     -- Child Categories 
 
     -- Category 1: Phones
@@ -34,9 +36,9 @@ VALUES
     ('Sofa', 17, 4),
 
     -- Category 5: Edible Items
-    ('Chips', 18, 5),
-    ('Cold Drink', 19, 5),
-    ('Beer', 20, 5),
+    ('Chips', 18, 29),
+    ('Cold Drink', 19, 30),
+    ('Beer', 20, 31),
 
     -- Category 6: Stationary
     ('Pen', 21, 6),
@@ -47,4 +49,15 @@ VALUES
     ('Samsung', 24, 7),
     ('Microsoft', 25, 7),
     ('Apple', 26, 7),
-    ('Google', 27, 7);
+    ('Google', 27, 7),
+
+    -- creating more heirarchy
+
+    -- food
+    ('Human Food', 28, 5),
+    ('Fast food/snacks', 29, 28),
+    ('Drinks (non alcoholic)', 30, 28),
+    ('Drinks (alcoholic)', 31, 28),
+
+    -- electronics
+    ('Electronics', 32, NULL);
