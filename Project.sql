@@ -90,7 +90,7 @@ CREATE TABLE Product(
     pDescription VARCHAR(100) DEFAULT NULL,
     productTypeID int NOT NULL,
     size VARCHAR(10) NOT NULL DEFAULT NULL,
-    PRIMARY KEY(productID, shopID),
+    PRIMARY KEY(productID),
     FOREIGN KEY (shopID) REFERENCES Shop(shopID),
     FOREIGN KEY (productTypeID) REFERENCES ProductType(productTypeID)
     ON UPDATE CASCADE ON DELETE CASCADE,
@@ -98,12 +98,11 @@ CREATE TABLE Product(
 );
 
 CREATE TABLE Photo(
-    shopId int NOT NULL,
     photoID int NOT NULL identity(1,1),
     content IMAGE NOT NULL,
     productID int NOT NULL,
     PRIMARY KEY(photoID),
-    FOREIGN KEY(productID, shopId) REFERENCES Product(productID, shopID)
+    FOREIGN KEY(productID) REFERENCES Product(productID)
     ON UPDATE CASCADE ON DELETE CASCADE
 );
 
@@ -118,7 +117,6 @@ CREATE TABLE RestrictedTo(
 
 CREATE TABLE OrderItem(
     orderID int NOT NULL,
-    shopID int NOT NULL,
     sequenceNum int,
     shipmentId int,
     productID int NOT NULL,
@@ -128,9 +126,49 @@ CREATE TABLE OrderItem(
     PRIMARY KEY(orderID, sequenceNum),
     FOREIGN KEY(orderID) REFERENCES OrderTable(orderID),
     FOREIGN KEY(shipmentId) REFERENCES Shipment(shipmentID),
-    FOREIGN KEY(productID, shopID) REFERENCES Product(productID, shopID)
+    FOREIGN KEY(productID) REFERENCES Product(productID)
     ON UPDATE CASCADE ON DELETE CASCADE,
     CHECK(quantity > 0), -- must at least have 1 qty
     CHECK(unitPrice > 0), -- unit price cannot be below 0
-    CHECK(itemStatus >= 0 AND itemStatus < 3) -- itemStatus must be within 0 and 2
+    CHECK(itemStatus >= 0 AND itemStatus < 3), -- itemStatus must be within 0 and 2
+    CHECK((itemStatus<>1 AND shipmentID is NULL) OR (itemStatus=1 AND shipmentID IS NOT NULL))
 );
+GO;
+
+CREATE TRIGGER TRG
+ON OrderItem
+INSTEAD OF INSERT
+
+AS
+
+DECLARE @sid INT
+DECLARE @iid INT
+
+DECLARE @shipid INT
+DECLARE @pid INT
+DECLARE @qty INT
+DECLARE @up REAL
+DECLARE @istatus SMALLINT
+
+SELECT @iid=orderID FROM INSERTED
+SELECT @sid=sequenceNum FROM INSERTED
+SELECT @shipid=shipmentId FROM INSERTED
+SELECT @pid=productID FROM INSERTED
+SELECT @qty=quantity FROM INSERTED
+SELECT @up=unitPrice FROM INSERTED
+SELECT @istatus=itemStatus FROM INSERTED
+
+
+--check if inserted AreaID exists in table -for setting SurfaceID
+IF NOT EXISTS (SELECT * FROM OrderItem WHERE orderID=@iid)
+SET @sid=1
+ELSE
+SET @sid=(  SELECT MAX(O.sequenceNum)+1 
+            FROM OrderItem O
+            WHERE O.orderID=@Iid
+          )
+
+INSERT INTO OrderItem (orderID, sequenceNum, shipmentId, productID, quantity, unitPrice, itemStatus)
+            VALUES  (@iid,@sid,@shipid,@pid,@qty,@up,@istatus)
+
+GO;

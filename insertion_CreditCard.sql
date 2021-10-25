@@ -1,7 +1,7 @@
 USE PROJECT
 GO
 
-INSERT INTO dbo.Payment(
+INSERT INTO dbo.CreditCard(
     cardNumber,custID,expiryDate
     )   
 VALUES
