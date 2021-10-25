@@ -1,8 +1,13 @@
+'''
+Create static data in CSV format for Customer
+'''
+
 from faker import Faker
+from random_username.generate import generate_username
 import random
 import string
-from random_username.generate import generate_username
-import pyodbc
+import csv
+
 
 def generate_email(i: int, name: str):
     domain = ["@outlook.com", "@gmail.com", "@yahoo.com"]
@@ -16,9 +21,11 @@ def generate_email(i: int, name: str):
     else:
         return (name + domain[2])
 
+
 def generate_phoneNum():
     firstNum = random.randint(8, 9)
     return int(str(firstNum) + str(random.randint(1000000, 9999999)))
+
 
 def generate_password():
     password = ""
@@ -33,12 +40,18 @@ def generate_password():
 
     return str(password)
 
-if __name__ == "__main__":
-    cnxn = pyodbc.connect(
-        'DRIVER={ODBC Driver 17 for SQL Server};SERVER=localhost;DATABASE=Project;Trusted_Connection=yes;')
+def writeCustomer(row, flag):
+    if flag == 0:
+        with open('scripts/customer.csv', 'w', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow(
+                ["Name", "PhoneNum", "Username", "Email", "Address", "Password"])
+    else:
+        with open('scripts/customer.csv', 'a', newline='') as f:
+            writer = csv.writer(f)
+            writer.writerow([row[0], row[1], row[2], row[3], row[4], row[5]])
 
-    cursor = cnxn.cursor()
-
+if __name__ == '__main__':
     fake = Faker("en_US")
     phoneNumList = []
 
@@ -51,19 +64,13 @@ if __name__ == "__main__":
         phone_num = generate_phoneNum()
         if phone_num in phoneNumList:
             while phone_num in phoneNumList:
-                phone_num = generate_phoneNum
+                phone_num = generate_phoneNum()
         else:
             phoneNumList.append(phone_num)
 
         password = generate_password()
 
-        print(name, phoneNumList[i], email, address, password)
+        print(name, phoneNumList[i], username, email, address, password)
+        row = [name, phoneNumList[i], username, email, address, password]
 
-        params = [email, username, name, phoneNumList[i], address, password]
-
-        cursor.execute(
-            "INSERT INTO dbo.Customer(email_address, username, full_name, phone_number, user_address, user_password) VALUES(?, ?, ?, ?, ?, ?)", params)
-        cnxn.commit()
-
-    print("Completed")
-    
+        writeCustomerToTxt(row, i)

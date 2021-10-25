@@ -1,74 +1,73 @@
 /* Creating the database */
 CREATE DATABASE Project;
-GO
 
 USE Project;
-GO
 
 CREATE TABLE Customer(
-    Cust_ID int NOT NULL IDENTITY(1,1),
-    email_address VARCHAR(50) NOT NULL,
+    custID int NOT NULL identity(1,1),
+    emailAddress VARCHAR(50) NOT NULL,
     username VARCHAR(50) NOT NULL,
-    full_name VARCHAR(100) NOT NULL,
-    phone_number int NOT NULL,
-    user_address VARCHAR(200) NOT NULL,
-    user_password VARCHAR(50) NOT NULL,
-    PRIMARY KEY (Cust_ID),
-    UNIQUE (email_address, username)
+    fullName VARCHAR(100) NOT NULL,
+    phoneNumber int NOT NULL,
+    userAddress VARCHAR(200) NOT NULL,
+    userPassword VARCHAR(50) NOT NULL,
+    PRIMARY KEY (custID),
+    UNIQUE (emailAddress, username)
 );
 
 CREATE TABLE CreditCard(
-    CardNumber int NOT NULL,
-    Cust_ID int NOT NULL,
-    ExpiryDate DATE NOT NULL,
-    PRIMARY KEY (CardNumber),
-    FOREIGN KEY(Cust_ID) REFERENCES Customer(Cust_ID)
+    cardNumber int NOT NULL,
+    custID int NOT NULL,
+    expiryDate DATE NOT NULL,
+    PRIMARY KEY (cardNumber),
+    FOREIGN KEY(custID) REFERENCES Customer(custID)
     ON UPDATE CASCADE ON DELETE CASCADE
 );
 
-CREATE TABLE Order_Table(
-    orderID int NOT NULL IDENTITY(1,1),
-    Cust_ID int NOT NULL,
-    order_date DATE NOT NULL,
-    -- 0 - processing, 1 - completed, 2 - canceled 
-    order_status SMALLINT NOT NULL DEFAULT 0,
+CREATE TABLE OrderTable(
+    orderID int NOT NULL identity(1,1),
+    custID int NOT NULL,
+    orderDate DATE NOT NULL DEFAULT GETDATE(),
+    orderStatus SMALLINT NOT NULL DEFAULT 0, -- 0 - processing, 1 - completed, 2 - canceled 
     PRIMARY KEY (orderID),
-    FOREIGN KEY(Cust_ID) REFERENCES Customer(Cust_ID)
-    ON UPDATE CASCADE ON DELETE CASCADE
+    FOREIGN KEY(custID) REFERENCES Customer(custID)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+    CHECK(orderStatus >= 0 AND orderStatus < 3) -- itemStatus must be within 0 and 2
 );
 
 CREATE TABLE Invoice(
-    invoiceNum int NOT NULL IDENTITY(1,1),
+    invoiceNum int NOT NULL identity(1,1),
     orderID int NOT NULL,
-    -- 0 -not paid, 1 - partially paid, 2 - fully paid
-    invoice_status SMALLINT NOT NULL DEFAULT 0,
-    invoice_date DATE NOT NULL DEFAULT GETDATE(),
+    invoiceStatus SMALLINT NOT NULL DEFAULT 0, -- 0 -not paid, 1 - partially paid, 2 - fully paid
+    invoiceDate DATE NOT NULL DEFAULT GETDATE(),
     PRIMARY KEY(invoiceNum),
-    FOREIGN KEY(orderID) REFERENCES Order_Table(orderID)
-    ON UPDATE CASCADE ON DELETE CASCADE
+    FOREIGN KEY(orderID) REFERENCES OrderTable(orderID)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+    CHECK(invoiceStatus >= 0 AND invoiceStatus < 3) -- invoiceStatus must be within 0 and 2
 );
 
 CREATE TABLE Payment(
-    paymentID int NOT NULL IDENTITY(1,1),
-    invoice_number int NOT NULL,
-    CardNumber int NOT NULL,
+    paymentID int NOT NULL identity(1,1),
+    invoiceNumber int NOT NULL,
+    cardNumber int NOT NULL,
     amount REAL NOT NULL DEFAULT 0,
-    payment_date DATE NOT NULL,
+    paymentDate DATE NOT NULL DEFAULT GETDATE(),
     PRIMARY KEY(paymentID),
-    FOREIGN KEY(invoice_number) REFERENCES Invoice(invoiceNum),
-    FOREIGN KEY(CardNumber) REFERENCES CreditCard(CardNumber)
-    ON UPDATE CASCADE ON DELETE CASCADE
+    FOREIGN KEY(invoiceNumber) REFERENCES Invoice(invoiceNum),
+    FOREIGN KEY(cardNumber) REFERENCES CreditCard(cardNumber)
+    ON UPDATE CASCADE ON DELETE CASCADE,
+    CHECK(amount >= 0)
 );
 
 CREATE TABLE Shipment(
-    shipmentID int NOT NULL IDENTITY(1,1),
-    shipment_date DATE NOT NULL,
+    shipmentID int NOT NULL identity(1,1),
+    shipmentDate DATE NOT NULL DEFAULT GETDATE(),
     trackingNum int NOT NULL,
     PRIMARY KEY(shipmentID),
 );
 
 CREATE TABLE Shop(
-    shopID int NOT NULL IDENTITY(1,1),
+    shopID int NOT NULL identity(1,1),
     sName VARCHAR(20) NOT NULL,
     PRIMARY KEY(shopID)
 );
@@ -76,14 +75,14 @@ CREATE TABLE Shop(
 CREATE TABLE ProductType(
     ptDescription VARCHAR(50) NOT NULL,
     productTypeID int NOT NULL,
-    -- NULL- no parent
-    parentID int DEFAULT NULL,
+    parentID int DEFAULT NULL, -- NULL- no parent
     PRIMARY KEY(productTypeID),
-    FOREIGN KEY (parentID) REFERENCES ProductType(productTypeID)
+    FOREIGN KEY (parentID) REFERENCES ProductType(productTypeID),
+    CHECK(productTypeID != parentID) -- productType cannot be its own parent
 );
 
 CREATE TABLE Product(
-    productID int NOT NULL IDENTITY(1,1),
+    productID int NOT NULL identity(1,1),
     shopID int NOT NULL,
     pName VARCHAR(20) NOT NULL,
     color VARCHAR(20) NOT NULL,
@@ -100,7 +99,7 @@ CREATE TABLE Product(
 
 CREATE TABLE Photo(
     shopId int NOT NULL,
-    photoID int NOT NULL IDENTITY(1,1),
+    photoID int NOT NULL identity(1,1),
     content IMAGE NOT NULL,
     productID int NOT NULL,
     PRIMARY KEY(photoID),
@@ -120,18 +119,18 @@ CREATE TABLE RestrictedTo(
 CREATE TABLE OrderItem(
     orderID int NOT NULL,
     shopID int NOT NULL,
-    sequenceNum int NOT NULL IDENTITY(1,1),
+    sequenceNum int,
     shipmentId int,
     productID int NOT NULL,
     quantity int DEFAULT 1,
-    unitPrice REAL NOT NULL,
-    -- 0 - processing, 1 - Shipped, 2 - out of stock
-    itemStatus SMALLINT DEFAULT 0,
+    unitPrice REAL NOT NULL DEFAULT 0,
+    itemStatus SMALLINT DEFAULT 0, -- 0 - processing, 1 - Shipped, 2 - out of stock
     PRIMARY KEY(orderID, sequenceNum),
-    FOREIGN KEY(orderID) REFERENCES Order_Table(orderID),
+    FOREIGN KEY(orderID) REFERENCES OrderTable(orderID),
     FOREIGN KEY(shipmentId) REFERENCES Shipment(shipmentID),
     FOREIGN KEY(productID, shopID) REFERENCES Product(productID, shopID)
-    ON UPDATE CASCADE ON DELETE CASCADE
+    ON UPDATE CASCADE ON DELETE CASCADE,
+    CHECK(quantity > 0), -- must at least have 1 qty
+    CHECK(unitPrice > 0), -- unit price cannot be below 0
+    CHECK(itemStatus >= 0 AND itemStatus < 3) -- itemStatus must be within 0 and 2
 );
-
-GO  
