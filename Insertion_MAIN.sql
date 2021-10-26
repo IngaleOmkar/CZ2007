@@ -9,6 +9,12 @@ VALUES
     ('Emily Soto', 86913536 ,'spiritedIcecream8','EmilySoto@gmail.com','767 Rios Summit Suite 255 New Seanchester, MA 79836','Ofv6L&*8tS&id'),
     ('Michael Ponce',87925784,'adoringHeron8','MichaelPonce@yahoo.com','7952 Dawson Plains Suite 895 South Darrell, KS 13800','1p(uAcPQL))'),
     ('Michael Davis',98322225,'trustingLemur8','MichaelDavis@outlook.com','847 Brenda Rapids West Tiffanyland, LA 20789','25LZKRF!BS'),
+    ('Sarah King',83170433,'eagerTomatoe9','SarahKing@yahoo.com','4492 Joshua Flat Mitchellstad, WI 12865','Jf@m7xHi9por79P'),
+    ('Devin Williams',91244704,'cheerfulTeal9','DevinWilliams@outlook.com','204 Olson Rest Apt. 994 New Erinside, KY 25755','vEC9dF&H5G%z'),
+    ('Michael Robinson',93832946,'jumpyWildfowl7','MichaelRobinson@gmail.com','428 Sandra Gateway Suite 572 East Madisonchester, OR 77000','oQ2dL6lLUUW7*g'),
+    ('Clinton Murphy',83141710,'cautiousGranola4','ClintonMurphy@yahoo.com','620 Hunter Motorway Stevensburgh, VA 28482','xAui&ofm41^sK'),
+    ('Stephanie Williams',85431759,'similarMuesli6','StephanieWilliams@outlook.com','94056 Rodriguez Port New Rebeccaberg, WY 36272','*n^EhUXhre&Orqi'),
+    ('Shane Edwards',86875376,'mercifulDoughnut4','ShaneEdwards@gmail.com','708 Carr Burg Apt. 944 Bradleymouth, ND 94426','*0A*hA(CM('),
     ('Philip Rogers',97344507,'decimalDinosaur1','PhilipRogers@gmail.com','59803 Jones Street Chadtown, SD 89378','5JUS6OngZZCeEg');
 
 -- Credit Card
@@ -19,18 +25,15 @@ VALUES
     (123123123,1,'2021-12-25'),
     (234234234,2,'2021-12-25'),
     (345345345,3,'2021-12-25'),
-    (456456456,4,'2021-12-25');
-
+    (456456456,4,'2021-12-25'),
+    (567567567,5,'2021-12-25'),
+    (678678678,6,'2021-12-25'),
+    (789789789,7,'2021-12-25'),
+    (890890890,8,'2021-12-25'),
+    (901901901,9,'2021-12-25'),
+    (012012012,10,'2021-12-25')    
+    ;
 -- This will need to change the card number as its just a temp 
-
-INSERT INTO dbo.OrderTable(
-    custID,orderDate,orderStatus
-    )   
-VALUES
-    (1,'2021-12-25',0),
-    (2,'2021-11-15',1),
-    (1,'2021-11-5',2),
-    (4,'2021-1-25',2);
 
 INSERT INTO dbo.Shipment(
     shipmentDate,trackingNum
@@ -41,7 +44,22 @@ VALUES
     ('2021-12-29',10003),  
     ('2021-2-25',10004),
     ('2021-1-25',10005);
--- This will need to change the card number as its just a temp 
+
+INSERT INTO dbo.Shop(
+    sName
+    )   
+VALUES
+    ('Apple Store'),
+    ('Samsung Store'),
+    ('Best Buy'),
+    ('Seven Eleven'),
+    ('Value Dollar'),
+    ('Google Store'),
+    ('Subway'),
+    ('Stationary Foreva'),
+    ('IKEA');
+
+
 INSERT INTO dbo.ProductType(
     ptDescription, productTypeID, parentID
     )
@@ -103,19 +121,23 @@ VALUES
     ('Charging cable', 33, 32),
     ('Power brick', 34, 32);
 
-INSERT INTO dbo.Shop(
-    sName
+INSERT INTO dbo.OrderTable(
+    custID,orderDate,orderStatus -- 0 processing 1 Shipped 2 cancelled
     )   
 VALUES
-    ('Apple Store'),
-    ('Samsung Store'),
-    ('Best Buy'),
-    ('Seven Eleven'),
-    ('Value Dollar'),
-    ('Google Store'),
-    ('Subway'),
-    ('Stationary Foreva'),
-    ('IKEA');
+    (1,'2021-12-25',0), --1
+    (1,'2021-12-26',0), --2
+    (1,'2021-12-27',0), --3
+    (3,'2021-12-28',0), --4
+    (4,'2021-12-29',0), --5
+    (5,'2021-12-20',0), --6
+    (6,'2021-12-21',0), --7
+    (1,'2021-12-22',0), --8
+    (1,'2021-12-23',0), --9
+    (2,'2021-11-14',1), --10
+    (1,'2021-11-5',2), --11
+    (4,'2021-1-25',2); --12
+
 
 INSERT INTO dbo.Product(
     shopID, pDescription, pName, color, size, price, productTypeID
@@ -289,39 +311,61 @@ VALUES
     (3, 'Google Notebook', 'Google Notebook', 'Silver', 'Small', '599', 27),
     (3, 'Google Notebook', 'Google Notebook', 'Silver', 'Large', '999', 27);
 
-INSERT INTO dbo.OrderItem(
-    orderID,shipmentId,productID,quantity,unitPrice,itemStatus
-    )   
-VALUES
-    (1,NULL,2,2,10.5,0),
-    (1,NULL,14,2,19.5,0),
-    (2,1,3,1,10.5,1),
-    (2,2,10,1,17.5,0),
-    (3,NULL,29,10,1.5,2),
-    (4,3,4,5,10.5,1);
-    -- (1,NULL,2,10,0.5,1);
-
 INSERT INTO dbo.Invoice(
-    orderID,invoiceStatus,invoiceDate
+    orderID,invoiceStatus,invoiceDate -- 0 -not paid, 1 - partially paid, 2 - fully paid
     )   
 VALUES
-    (1,1,'2021-12-25'),
-    (2,2,'2021-12-26'),
-    (3,0,'2021-12-27'),
-    (4,0,'2021-12-28'),
-    (5,2,'2021-12-29'),
-    (6,1,'2021-12-20'),
-    (7,0,'2021-12-31');
+    (1,1,'2021-12-25'), --Cust 1
+    (2,0,'2021-12-26'), --Cust 1
+    (3,1,'2021-12-27'), --Cust 1
+    (4,0,'2021-12-28'), --Cust 3
+    (5,1,'2021-12-29'), --Cust 4
+    (6,0,'2021-12-20'), --Cust 5
+    (7,1,'2021-12-31'), --Cust 6
+    (8,0,'2021-12-31'), --Cust 1
+    (9,1,'2021-12-31'), --Cust 1
+    (10,2,'2021-12-31'), --Cust 2
+    (11,0,'2021-12-31'), --Cust 1
+    (12,0,'2021-12-31') --Cust 4
+    ;
+
+
+INSERT INTO dbo.OrderItem(
+    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
+    )   
+VALUES
+    (1,NULL,2,5,10.5,0),
+    (2,NULL,2,20,10.5,0),
+    (3,NULL,2,2,10.5,0),
+    (4,NULL,3,4,10.5,0),
+    (5,NULL,3,14,10.5,0),
+    (6,NULL,3,8,10.5,0),
+    (7,NULL,4,7,10.5,0),
+    (8,NULL,4,6,10.5,0),
+    (9,NULL,4,24,10.5,0),
+
+    (11,NULL,14,2,19.5,2),
+    (10,1,2,10,10.5,1),
+    (10,2,3,9,10.5,1),
+    (10,2,1,8,10.5,1),
+    (10,4,3,7,10.5,1),
+    (10,5,3,6,10.5,1),
+    (12,NULL,10,1,17.5,2),
+    (11,NULL,29,10,1.5,2),
+    (10,3,4,5,10.5,1);
+
 
 INSERT INTO dbo.Payment(
     invoiceNumber,cardNumber,amount,paymentDate
     )   
 VALUES
     (1,123123123,100,'2021-12-25'),
-    (1,234234234 ,100,'2021-12-25'),
-    (1,456456456,100,'2021-12-25'),
-    (1,123123123 ,100,'2021-12-25'),
-    (1,234234234 ,100,'2021-12-25');
+    (1,123123123,100,'2021-12-25'),
+    (3,456456456,100,'2021-12-25'),
+    (5,456456456,100,'2021-12-25'),
+    (7,678678678,100,'2021-12-25'),
+    (9,123123123,100,'2021-12-25'),
+    (10,234234234,1000,'2021-12-25');
 
 
 INSERT INTO dbo.RestrictedTo(
