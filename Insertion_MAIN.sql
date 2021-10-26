@@ -99,7 +99,9 @@ VALUES
     ('Drinks (alcoholic)', 31, 28),
 
     -- electronics
-    ('Electronics', 32, NULL);
+    ('Electronics', 32, NULL),
+    ('Charging cable', 33, 32),
+    ('Power brick', 34, 32);
 
 INSERT INTO dbo.Shop(
     sName
