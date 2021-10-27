@@ -84,7 +84,7 @@ CREATE TABLE ProductType(
 CREATE TABLE Product(
     productID int NOT NULL identity(1,1),
     shopID int NOT NULL,
-    pName VARCHAR(20) NOT NULL,
+    pName VARCHAR(30) NOT NULL,
     color VARCHAR(20) NOT NULL,
     price REAL NOT NULL DEFAULT 0,
     pDescription VARCHAR(100) DEFAULT NULL,
