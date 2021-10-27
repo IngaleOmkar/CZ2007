@@ -17,3 +17,15 @@ WHERE p1.productTypeID = p2.parentID AND p1.parentID IS NULL;
 
 SELECT TOP 3 email_address FROM Customer
 ORDER BY NEWID();
+
+
+--Return TotalRevenue by month for each Shop Name.
+
+SELECT sName, invoiceYear, invoiceMonth, SUM(Revenue) AS TotalRevenue FROM (
+	SELECT p.shopID, YEAR(i.invoiceDate) AS invoiceYear, MONTH(i.invoiceDate) AS invoiceMonth, SUM(o.unitPrice*o.quantity) as Revenue FROM OrderItem o, Invoice i, Product p
+		WHERE o.orderID = i.orderID AND i.invoiceStatus = 2 AND o.productID = p.productID 
+		GROUP BY p.shopID, invoiceDate
+) AS MonthlyRevenue
+FULL JOIN Shop s ON s.shopID = MonthlyRevenue.shopID 
+GROUP BY sName,invoiceYear,invoiceMonth
+;

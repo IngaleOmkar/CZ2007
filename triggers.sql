@@ -1,5 +1,4 @@
---When the full payment to an invoice is made, the invoice status is changed from ‘issued’ 
-to ‘paid’. 
+--When the full payment to an invoice is made, the invoice status is changed from ‘issued’ to ‘paid’. 
 
 CREATE TRIGGER FullPayment 
 ON Payment
@@ -26,6 +25,7 @@ BEGIN
 
 END
 
+GO
 
 --When an order item is shipped, its status is changed from ‘processing’ to ‘shipped’.
 
@@ -38,9 +38,8 @@ BEGIN
 END
 
 
---When all the products in an order have been shipped, the order status is changed from 
-‘processing’ to ‘completed’. 
-
+--When all the products in an order have been shipped, the order status is changed from ‘processing’ to ‘completed’. 
+GO
 CREATE TRIGGER ChangeOrderStatus 
 ON OrderItem
 AFTER UPDATE
