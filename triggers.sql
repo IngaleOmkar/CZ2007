@@ -28,12 +28,28 @@ END
 GO
 
 --When an order item is shipped, its status is changed from ‘processing’ to ‘shipped’.
+--OrderItem cannot be shipped when invoice is not fully paid
 
 CREATE TRIGGER ShipOrderItem 
 ON OrderItem
 AFTER UPDATE
 AS 
 BEGIN
+	IF UPDATE(shipmentId)
+	BEGIN
+		UPDATE o SET shipmentId=NULL FROM OrderItem o WHERE EXISTS(
+			SELECT * FROM inserted
+			 LEFT JOIN Invoice ON Invoice.orderID = inserted.orderID
+			 WHERE (invoiceStatus <> 2 OR invoiceStatus IS NULL) AND inserted.shipmentId IS NOT NULL AND inserted.sequenceNum = o.sequenceNum
+				AND inserted.orderID = o.orderID
+		);
+		IF EXISTS (SELECT * FROM inserted
+			 LEFT JOIN Invoice ON Invoice.orderID = inserted.orderID
+			 WHERE (invoiceStatus <> 2 OR invoiceStatus IS NULL) AND inserted.shipmentId IS NOT NULL)
+		BEGIN
+			;THROW 51000, 'Cannot ship orderItem that are not fully paid',1 
+		END
+	END
 	UPDATE OrderItem SET itemStatus = 1 WHERE shipmentId IS NOT NULL;
 END
 
@@ -47,3 +63,4 @@ AS
 BEGIN
 	UPDATE OrderTable SET orderStatus = 1 WHERE orderID NOT IN(SELECT DISTINCT orderID FROM orderItem WHERE itemStatus!=1);
 END
+
