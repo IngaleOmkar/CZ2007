@@ -159,15 +159,51 @@ SELECT @istatus=itemStatus FROM INSERTED
 
 
 --check if inserted AreaID exists in table -for setting SurfaceID
-IF NOT EXISTS (SELECT * FROM OrderItem WHERE orderID=@iid)
-SET @sid=1
+-- IF NOT EXISTS (SELECT * FROM OrderItem WHERE orderID=@iid)
+-- SET @sid=1
+-- ELSE
+-- SET @sid=(  SELECT MAX(O.sequenceNum)+1 
+--             FROM OrderItem O
+--             WHERE O.orderID=@Iid
+--           )
+
+-- INSERT INTO OrderItem (orderID, sequenceNum, shipmentId, productID, quantity, unitPrice, itemStatus)
+--             VALUES  (@iid,@sid,@shipid,@pid,@qty,@up,@istatus)
+
+-- GO;
+
+-- Set Sequence Num & Check When an invoice is issued(paid partially or fully), no more order item can be added to the order
+
+-- Check if order is paid, item cannot be added anymore
+IF((SELECT SUM(i.invoiceStatus) 
+FROM OrderTable o, OrderItem oi, Invoice i
+WHERE (
+    i.orderID = @iid
+    AND oi.orderID = @iid
+    AND o.orderID = @iid
+)) <> 0) 
+ROLLBACK TRANSACTION
+
+
+IF (NOT EXISTS (SELECT * FROM OrderItem WHERE orderID=@iid))
+    SET @sid=1
 ELSE
+
 SET @sid=(  SELECT MAX(O.sequenceNum)+1 
             FROM OrderItem O
             WHERE O.orderID=@Iid
-          )
+        )
 
-INSERT INTO OrderItem (orderID, sequenceNum, shipmentId, productID, quantity, unitPrice, itemStatus)
-            VALUES  (@iid,@sid,@shipid,@pid,@qty,@up,@istatus)
+-- If there is already productId inside the orderTable, we update the quantity
+IF (NOT EXISTS (SELECT * FROM OrderItem WHERE (orderID=@iid) AND (productID=@pid)))
+    INSERT INTO OrderItem (orderID, sequenceNum, shipmentId, productID, quantity, unitPrice, itemStatus)
+                VALUES  (@iid,@sid,@shipid,@pid,@qty,@up,@istatus)
+ELSE
+    UPDATE OrderItem
+    SET quantity = quantity + @qty
+    WHERE orderID = @iid AND productID = @pid
+
 
 GO;
+
+

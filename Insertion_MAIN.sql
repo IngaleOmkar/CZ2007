@@ -491,24 +491,6 @@ VALUES
 --     (3, 'Google Notebook', 'Google Notebook', 'Silver', 'Small', '599', 27),
 --     (3, 'Google Notebook', 'Google Notebook', 'Silver', 'Large', '999', 27);
 
-INSERT INTO dbo.Invoice(
-    orderID,invoiceStatus,invoiceDate -- 0 -not paid, 1 - partially paid, 2 - fully paid
-    )   
-VALUES
-    (1,1,'2021-12-25'), --Cust 1
-    (2,0,'2021-12-26'), --Cust 1
-    (3,1,'2021-12-27'), --Cust 1
-    (4,0,'2021-12-28'), --Cust 3
-    (5,1,'2021-12-29'), --Cust 4
-    (6,0,'2021-12-20'), --Cust 5
-    (7,1,'2021-12-31'), --Cust 6
-    (8,0,'2021-12-31'), --Cust 1
-    (9,1,'2021-12-31'), --Cust 1
-    (10,2,'2021-12-31'), --Cust 2
-    (11,0,'2021-12-31'), --Cust 1
-    (12,0,'2021-12-31') --Cust 4
-    ;
-
 
 INSERT INTO dbo.OrderItem(
     orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
@@ -535,6 +517,23 @@ VALUES
     (10,3,4,5,10.5,1);
 
 
+INSERT INTO dbo.Invoice(
+    orderID,invoiceStatus,invoiceDate -- 0 -not paid, 1 - partially paid, 2 - fully paid
+    )   
+VALUES
+    (1,1,'2021-12-25'), --Cust 1
+    (2,0,'2021-12-26'), --Cust 1
+    (3,1,'2021-12-27'), --Cust 1
+    (4,0,'2021-12-28'), --Cust 3
+    (5,1,'2021-12-29'), --Cust 4
+    (6,0,'2021-12-20'), --Cust 5
+    (7,1,'2021-12-31'), --Cust 6
+    (8,0,'2021-12-31'), --Cust 1
+    (9,1,'2021-12-31'), --Cust 1
+    (10,2,'2021-12-31'), --Cust 2
+    (11,0,'2021-12-31'), --Cust 1
+    (12,0,'2021-12-31') --Cust 4;
+
 INSERT INTO dbo.Payment(
     invoiceNumber,cardNumber,amount,paymentDate
     )   
@@ -546,7 +545,6 @@ VALUES
     (7,678678678,100,'2021-12-25'),
     (9,123123123,100,'2021-12-25'),
     (10,234234234,1000,'2021-12-25');
-
 
 INSERT INTO dbo.RestrictedTo(
     shopID, productTypeID

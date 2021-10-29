@@ -29,3 +29,53 @@ SELECT sName, invoiceYear, invoiceMonth, SUM(Revenue) AS TotalRevenue FROM (
 FULL JOIN Shop s ON s.shopID = MonthlyRevenue.shopID 
 GROUP BY sName,invoiceYear,invoiceMonth
 ;
+
+
+-- 2) Get Top 3 productTypeID according to Quantity Sold
+
+SELECT TOP 3 p1.productTypeID, SUM(o1.quantity) as "Quantity Sold"
+FROM Product p1, Invoice I1, OrderTable or1, OrderItem o1
+WHERE 
+o1.orderID = or1.orderID
+AND or1.orderID = I1.orderID
+AND or1.orderID = o1.orderID
+AND or1.orderStatus = 1
+AND i1.invoiceStatus = 2
+AND o1.productID = p1.productID
+GROUP BY p1.productTypeID
+ORDER BY SUM(o1.quantity) DESC;
+
+
+-- 4) Find 2 product ids that are ordered together the most. 
+
+SELECT o1.productID, o2.productID, COUNT(*) as "Number Order Together"
+FROM OrderTable or1, OrderItem o1, OrderItem o2
+WHERE 
+or1.orderID = o1.orderID
+AND or1.orderID = o2.orderID
+AND o1.sequenceNum <> o2.sequenceNum
+AND o1.productID < o2.productID
+GROUP BY o1.productID, o2.productID
+HAVING COUNT(*) = (
+SELECT TOP 1 COUNT(*)
+FROM OrderTable or1, OrderItem o1, OrderItem o2
+WHERE 
+or1.orderID = o1.orderID
+AND or1.orderID = o2.orderID
+AND o1.sequenceNum <> o2.sequenceNum
+AND o1.productID < o2.productID
+GROUP BY o1.productID, o2.productID
+ORDER BY COUNT(o1.productID) DESC)
+
+
+--7) Get payment number for each product type 
+
+SELECT pd.productTypeID, COUNT(p.invoiceNumber) AS "Number of Payment" , AVG(pd.price) AS "Average Product Price"
+FROM Invoice i, OrderTable ot , OrderItem oi, Payment p, Product pd
+WHERE i.invoiceStatus = 2
+AND i.orderID = ot.orderID
+AND oi.orderID = ot.orderID
+AND p.invoiceNumber = ot.orderID
+AND oi.productID = pd.productID
+GROUP BY pd.productTypeID 
+
