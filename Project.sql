@@ -130,8 +130,7 @@ CREATE TABLE OrderItem(
     ON UPDATE CASCADE ON DELETE CASCADE,
     CHECK(quantity > 0), -- must at least have 1 qty
     CHECK(unitPrice > 0), -- unit price cannot be below 0
-    CHECK(itemStatus >= 0 AND itemStatus < 3), -- itemStatus must be within 0 and 2
-    CHECK((itemStatus<>1 AND shipmentID is NULL) OR (itemStatus=1 AND shipmentID IS NOT NULL))
+    CHECK(itemStatus >= 0 AND itemStatus < 3) -- itemStatus must be within 0 and 2
 );
 GO;
 
