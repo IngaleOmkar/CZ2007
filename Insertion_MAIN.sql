@@ -125,17 +125,72 @@ INSERT INTO dbo.OrderTable(
     custID,orderDate,orderStatus -- 0 processing 1 Shipped 2 cancelled
     )   
 VALUES
-    (1,'2021-12-25',0), --1
-    (1,'2021-12-26',0), --2
-    (1,'2021-12-27',0), --3
-    (3,'2021-12-28',0), --4
-    (4,'2021-12-29',0), --5
-    (5,'2021-12-20',0), --6
-    (6,'2021-12-21',0), --7
-    (1,'2021-12-22',0), --8
-    (1,'2021-12-23',0), --9
-    (2,'2021-11-14',1), --10
-    (1,'2021-11-5',2), --11
+    (1,'2021-12-25',0); --1
+
+INSERT INTO dbo.OrderTable(
+    custID,orderDate,orderStatus -- 0 processing 1 Shipped 2 cancelled
+    )   
+VALUES
+    (1,'2021-12-26',0); --2
+
+INSERT INTO dbo.OrderTable(
+    custID,orderDate,orderStatus -- 0 processing 1 Shipped 2 cancelled
+    )   
+VALUES
+    (1,'2021-12-27',0); --3
+
+INSERT INTO dbo.OrderTable(
+    custID,orderDate,orderStatus -- 0 processing 1 Shipped 2 cancelled
+    )   
+VALUES
+    (3,'2021-12-28',0); --4
+
+INSERT INTO dbo.OrderTable(
+    custID,orderDate,orderStatus -- 0 processing 1 Shipped 2 cancelled
+    )   
+VALUES
+    (4,'2021-12-29',0); --5
+
+INSERT INTO dbo.OrderTable(
+    custID,orderDate,orderStatus -- 0 processing 1 Shipped 2 cancelled
+    )   
+VALUES
+    (5,'2021-12-20',0); --6
+
+INSERT INTO dbo.OrderTable(
+    custID,orderDate,orderStatus -- 0 processing 1 Shipped 2 cancelled
+    )   
+VALUES
+    (6,'2021-12-21',0); --7
+
+INSERT INTO dbo.OrderTable(
+    custID,orderDate,orderStatus -- 0 processing 1 Shipped 2 cancelled
+    )   
+VALUES
+    (1,'2021-12-22',0); --8
+
+INSERT INTO dbo.OrderTable(
+    custID,orderDate,orderStatus -- 0 processing 1 Shipped 2 cancelled
+    )   
+VALUES
+    (1,'2021-12-23',0); --9
+
+INSERT INTO dbo.OrderTable(
+    custID,orderDate,orderStatus -- 0 processing 1 Shipped 2 cancelled
+    )   
+VALUES
+    (2,'2021-11-14',1); --10
+
+INSERT INTO dbo.OrderTable(
+    custID,orderDate,orderStatus -- 0 processing 1 Shipped 2 cancelled
+    )   
+VALUES
+    (1,'2021-11-5',2); --11
+
+INSERT INTO dbo.OrderTable(
+    custID,orderDate,orderStatus -- 0 processing 1 Shipped 2 cancelled
+    )   
+VALUES
     (4,'2021-1-25',2); --12
 
 INSERT INTO dbo.Product(
@@ -538,12 +593,42 @@ INSERT INTO dbo.Payment(
     invoiceNumber,cardNumber,amount,paymentDate
     )   
 VALUES
-    (1,123123123,100,'2021-12-25'),
-    (1,123123123,100,'2021-12-25'),
-    (3,456456456,100,'2021-12-25'),
-    (5,456456456,100,'2021-12-25'),
-    (7,678678678,100,'2021-12-25'),
-    (9,123123123,100,'2021-12-25'),
+    (1,123123123,50,'2021-12-25');
+
+    INSERT INTO dbo.Payment(
+    invoiceNumber,cardNumber,amount,paymentDate
+    )   
+VALUES
+    (1,123123123,50,'2021-12-25');
+
+INSERT INTO dbo.Payment(
+    invoiceNumber,cardNumber,amount,paymentDate
+    )   
+VALUES
+    (3,456456456,50,'2021-12-25');
+
+INSERT INTO dbo.Payment(
+    invoiceNumber,cardNumber,amount,paymentDate
+    )   
+VALUES
+    (5,456456456,50,'2021-12-25');
+
+INSERT INTO dbo.Payment(
+    invoiceNumber,cardNumber,amount,paymentDate
+    )   
+VALUES
+    (7,678678678,50,'2021-12-25');
+
+INSERT INTO dbo.Payment(
+    invoiceNumber,cardNumber,amount,paymentDate
+    )   
+VALUES
+    (9,123123123,50,'2021-12-25');
+
+INSERT INTO dbo.Payment(
+    invoiceNumber,cardNumber,amount,paymentDate
+    )   
+VALUES
     (10,234234234,1000,'2021-12-25');
 
 INSERT INTO dbo.RestrictedTo(
