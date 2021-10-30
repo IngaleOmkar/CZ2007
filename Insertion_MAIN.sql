@@ -43,7 +43,12 @@ VALUES
     ('2021-12-28',10002),
     ('2021-12-29',10003),  
     ('2021-2-25',10004),
-    ('2021-1-25',10005);
+    ('2021-1-22',10005),
+	('2021-2-26',10006),
+	('2021-3-25',10007),
+	('2021-4-25',10008),
+	('2021-5-25',10009),
+	('2021-6-25',10010);
 
 INSERT INTO dbo.Shop(
     sName
@@ -125,13 +130,13 @@ INSERT INTO dbo.OrderTable(
     custID,orderDate,orderStatus -- 0 processing 1 Shipped 2 cancelled
     )   
 VALUES
-    (1,'2021-12-25',0); --1
+    (1,'2021-10-25',0); --1
 
 INSERT INTO dbo.OrderTable(
     custID,orderDate,orderStatus -- 0 processing 1 Shipped 2 cancelled
     )   
 VALUES
-    (1,'2021-12-26',0); --2
+    (1,'2021-11-26',0); --2
 
 INSERT INTO dbo.OrderTable(
     custID,orderDate,orderStatus -- 0 processing 1 Shipped 2 cancelled
@@ -143,7 +148,7 @@ INSERT INTO dbo.OrderTable(
     custID,orderDate,orderStatus -- 0 processing 1 Shipped 2 cancelled
     )   
 VALUES
-    (3,'2021-12-28',0); --4
+    (3,'2021-10-28',0); --4
 
 INSERT INTO dbo.OrderTable(
     custID,orderDate,orderStatus -- 0 processing 1 Shipped 2 cancelled
@@ -155,7 +160,7 @@ INSERT INTO dbo.OrderTable(
     custID,orderDate,orderStatus -- 0 processing 1 Shipped 2 cancelled
     )   
 VALUES
-    (5,'2021-12-20',0); --6
+    (5,'2021-11-20',0); --6
 
 INSERT INTO dbo.OrderTable(
     custID,orderDate,orderStatus -- 0 processing 1 Shipped 2 cancelled
@@ -173,7 +178,7 @@ INSERT INTO dbo.OrderTable(
     custID,orderDate,orderStatus -- 0 processing 1 Shipped 2 cancelled
     )   
 VALUES
-    (1,'2021-12-23',0); --9
+    (4,'2021-12-23',0); --9
 
 INSERT INTO dbo.OrderTable(
     custID,orderDate,orderStatus -- 0 processing 1 Shipped 2 cancelled
@@ -191,7 +196,7 @@ INSERT INTO dbo.OrderTable(
     custID,orderDate,orderStatus -- 0 processing 1 Shipped 2 cancelled
     )   
 VALUES
-    (4,'2021-1-25',2); --12
+    (4,'2021-09-25',2); --12
 
 INSERT INTO dbo.Product(
     shopID, pDescription, pName, color, size, price, productTypeID
@@ -551,58 +556,58 @@ INSERT INTO dbo.OrderItem(
     orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
     )   
 VALUES
-    (1,NULL,2,5,825,0);
+    (1,NULL,2,5,10.5,0);
 
 
 INSERT INTO dbo.OrderItem(
     orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
     )   
 VALUES
-    (2,NULL,2,20,825,0);
+    (2,NULL,2,20,10.5,0);
 
 
 INSERT INTO dbo.OrderItem(
     orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
     )   
 VALUES
-    (3,NULL,2,2,825,0);
+    (3,NULL,2,2,10.5,0);
 
 
 INSERT INTO dbo.OrderItem(
     orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
     )   
 VALUES
-    (4,NULL,3,4,825,0);
+    (4,NULL,3,4,10.5,0);
 
 INSERT INTO dbo.OrderItem(
     orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
     )   
 VALUES
-    (5,NULL,3,14,825,0);
+    (5,NULL,3,14,10.5,0);
 
 INSERT INTO dbo.OrderItem(
     orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
     )   
 VALUES
-    (6,NULL,3,8,825,0);
+    (6,NULL,3,8,10.5,0);
 
 INSERT INTO dbo.OrderItem(
     orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
     )   
 VALUES
-    (7,NULL,4,7,900,0);
+    (7,NULL,4,7,10.5,0);
 
 INSERT INTO dbo.OrderItem(
     orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
     )   
 VALUES
-    (8,NULL,4,6,900,0);
+    (8,NULL,4,6,10.5,0);
 
 INSERT INTO dbo.OrderItem(
     orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
     )   
 VALUES
-    (9,NULL,4,24,900,0);
+    (9,NULL,4,24,10.5,0);
 
 INSERT INTO dbo.OrderItem(
     orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
@@ -614,31 +619,31 @@ INSERT INTO dbo.OrderItem(
     orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
     )   
 VALUES
-    (10,1,2,10,825,1);
+    (10,1,2,10,10.5,1);
 
 INSERT INTO dbo.OrderItem(
     orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
     )   
 VALUES
-    (10,2,3,9,825,1);
+    (10,2,3,9,10.5,1);
 
 INSERT INTO dbo.OrderItem(
     orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
     )   
 VALUES
-    (10,2,1,8,825,1);
+    (10,2,1,8,10.5,1);
 
 INSERT INTO dbo.OrderItem(
     orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
     )   
 VALUES
-    (10,4,3,7,825,1);
+    (10,4,3,7,10.5,1);
 
 INSERT INTO dbo.OrderItem(
     orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
     )   
 VALUES
-    (10,5,3,6,825,1);
+    (10,5,3,6,10.5,1);
 
 INSERT INTO dbo.OrderItem(
     orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
@@ -656,213 +661,129 @@ INSERT INTO dbo.OrderItem(
     orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
     )   
 VALUES
-    (10,3,4,5,900,1);
-
--- -- Category 3: Gaming Consoles
+    (10,3,4,5,10.5,1);
+	
 INSERT INTO dbo.OrderItem(
-    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
+    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 73 out of stock
     )   
 VALUES
-    (1,NULL,49,5,699,0);
+    (1,NULL,71,5,4,0);
 
-INSERT INTO dbo.OrderItem(
-    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
-    )   
-VALUES
-    (2,NULL,50,7,699,0);
 
 INSERT INTO dbo.OrderItem(
     orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
     )   
 VALUES
-    (3,NULL,51,2,799,0);
+    (2,NULL,72,20,4,0);
+
 
 INSERT INTO dbo.OrderItem(
     orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
     )   
 VALUES
-    (4,NULL,52,2,799,0);
+    (3,NULL,73,2,6,0);
 
--- -- Category 4: Furniture
 
 INSERT INTO dbo.OrderItem(
     orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
     )   
 VALUES
-    (5,NULL,53,8,599,0);
-
-INSERT INTO dbo.OrderItem(
-    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
-    )   
-VALUES    
-    (6,NULL,54,2,599,0);
-
-INSERT INTO dbo.OrderItem(
-    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
-    )   
-VALUES  
-    (7,NULL,55,6,399,0);
-
-INSERT INTO dbo.OrderItem(
-    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
-    )   
-VALUES 
-    (8,NULL,56,1,399,0);
-
-INSERT INTO dbo.OrderItem(
-    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
-    )   
-VALUES    
-    (9,NULL,57,6,199,0);
-
-INSERT INTO dbo.OrderItem(
-    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
-    )   
-VALUES    
-    (11,NULL,58,2,199,0);
+    (4,NULL,74,4,6,0);
 
 INSERT INTO dbo.OrderItem(
     orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
     )   
 VALUES
-    (12,NULL,59,1,199,0);
-
-INSERT INTO dbo.OrderItem(
-    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
-    )   
-VALUES   
-    (1,NULL,60,4,599,0);
-
-INSERT INTO dbo.OrderItem(
-    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
-    )   
-VALUES    
-    (2,NULL,61,8,399,0);
-
-INSERT INTO dbo.OrderItem(
-    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
-    )   
-VALUES    
-    (3,NULL,62,3,399,0);
-
---  7-11
-INSERT INTO dbo.OrderItem(
-    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
-    )   
-VALUES
-    (1, NULL, 83, 4, 3, 0);
+    (5,NULL,75,14,3,0);
 
 INSERT INTO dbo.OrderItem(
     orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
     )   
 VALUES
-    (2, NULL, 84, 6, 3, 0);
+    (6,NULL,76,8,3,0);
 
 INSERT INTO dbo.OrderItem(
     orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
     )   
 VALUES
-    (3, NULL, 85, 6, 5, 0);
+    (7,NULL,77,7,4,0);
 
 INSERT INTO dbo.OrderItem(
     orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
     )   
 VALUES
-    (4, NULL, 86, 3, 5, 0);
+    (8,NULL,78,6,4,0);
 
 INSERT INTO dbo.OrderItem(
     orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
     )   
 VALUES
-    (5, NULL, 211, 10, 7, 0);
-
-
--- Stationery foreva
-INSERT INTO dbo.OrderItem(
-    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
-    )   
-VALUES
-    (6, NULL, 212, 10, 0.5, 0);
+    (9,NULL,79,24,5,0);
 
 INSERT INTO dbo.OrderItem(
     orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
     )   
 VALUES
-    (7, NULL, 334, 4, 0.5, 0);
+    (11,NULL,80,2,5,2);
 
 INSERT INTO dbo.OrderItem(
     orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
     )   
 VALUES
-    (8, NULL, 93, 20, 0.5, 0);
+    (10,1,81,10,7,1);
 
 INSERT INTO dbo.OrderItem(
     orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
     )   
 VALUES
-    (9, NULL, 335, 9, 0.5, 0);
+    (10,2,82,9,7,1);
 
 INSERT INTO dbo.OrderItem(
     orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
     )   
 VALUES
-    (10, NULL, 97, 1, 0.5, 0);
+    (10,2,83,8,7,1);
 
+INSERT INTO dbo.OrderItem(
+    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
+    )   
+VALUES
+    (10,4,84,7,7,1);
 
--- Best Buy shop insert
 INSERT INTO dbo.OrderItem(
     orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
-)   
+    )   
 VALUES
-(1, NULL, 3, 1, 849, 0);
-INSERT INTO dbo.OrderItem(
-    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
-)   
-VALUES
-(2, NULL, 22, 1, 1199, 0);
-INSERT INTO dbo.OrderItem(
-    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
-)   
-VALUES
-(3, NULL, 31, 1, 849, 0);
-INSERT INTO dbo.OrderItem(
-    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
-)   
-VALUES
-(4, NULL, 22, 1, 1199, 0);
-INSERT INTO dbo.OrderItem(
-    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
-)   
-VALUES
-(5, NULL, 32, 1, 749, 0);
+    (10,5,85,6,7,1);
 
--- Google store shop insert
 INSERT INTO dbo.OrderItem(
     orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
-)   
+    )   
 VALUES
-(6, NULL, 109, 1, 549, 0);
-INSERT INTO dbo.OrderItem(
-    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
-)   
-VALUES
-(7, NULL, 110, 1, 1099, 0);
-INSERT INTO dbo.OrderItem(
-    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
-)   
-VALUES
-(8, NULL, 109, 1, 599, 0);
-INSERT INTO dbo.OrderItem(
-    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
-)   
-VALUES
-(9, NULL, 110, 1, 999, 0);
-INSERT INTO dbo.OrderItem(
-    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
-)   
-VALUES
-(10, 1, 109, 1, 649, 1);
+   (12,NULL,86,1,7,2);
 
+INSERT INTO dbo.OrderItem(
+    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
+    )   
+VALUES
+    (11,NULL,87,10,7,2);
+
+INSERT INTO dbo.OrderItem(
+    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
+    )   
+VALUES
+    (10,3,89,5,7,1);
+INSERT INTO dbo.OrderItem(
+    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
+    )   
+VALUES
+    (10,3,90,5,7,1);
+INSERT INTO dbo.OrderItem(
+    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
+    )   
+VALUES
+    (10,3,91,5,7,1);
+	
 INSERT INTO dbo.OrderItem(
     orderID,shipmentId,productID,quantity,unitPrice,itemStatus
     )   
@@ -983,8 +904,187 @@ INSERT INTO dbo.OrderItem(
     )   
 VALUES
     (10,3,91,5,7,1);
+-- Best Buy shop insert
+INSERT INTO dbo.OrderItem(
+    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
+)   
+VALUES
+(1, 1, 3, 1, 849, 0);
+INSERT INTO dbo.OrderItem(
+    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
+)   
+VALUES
+(2, 2, 22, 1, 1199, 0);
+INSERT INTO dbo.OrderItem(
+    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
+)   
+VALUES
+(3, 3, 31, 1, 849, 0);
+INSERT INTO dbo.OrderItem(
+    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
+)   
+VALUES
+(4, 4, 22, 1, 1199, 0);
+INSERT INTO dbo.OrderItem(
+    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
+)   
+VALUES
+(5, 5, 32, 1, 749, 0);
+
+-- Google store shop insert
+INSERT INTO dbo.OrderItem(
+    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
+)   
+VALUES
+(6, 6, 109, 1, 549, 0);
+INSERT INTO dbo.OrderItem(
+    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
+)   
+VALUES
+(7, 7, 110, 1, 1099, 0);
+INSERT INTO dbo.OrderItem(
+    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
+)   
+VALUES
+(8, 8, 109, 1, 599, 0);
+INSERT INTO dbo.OrderItem(
+    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
+)   
+VALUES
+(9, 9, 110, 1, 999, 0);
+INSERT INTO dbo.OrderItem(
+    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
+)   
+VALUES
+(10, 10, 109, 1, 649, 1);
+
+--  7-11
+INSERT INTO dbo.OrderItem(
+    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
+    )   
+VALUES
+    (1, NULL, 83, 4, 3, 0);
+
+INSERT INTO dbo.OrderItem(
+    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
+    )   
+VALUES
+    (2, NULL, 84, 6, 3, 0);
+
+INSERT INTO dbo.OrderItem(
+    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
+    )   
+VALUES
+    (3, NULL, 85, 6, 5, 0);
+
+INSERT INTO dbo.OrderItem(
+    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
+    )   
+VALUES
+    (4, NULL, 86, 3, 5, 0);
 
 
+-- Stationery foreva
+
+
+INSERT INTO dbo.OrderItem(
+    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
+    )   
+VALUES
+    (8, NULL, 93, 20, 0.5, 0);
+
+
+INSERT INTO dbo.OrderItem(
+    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
+    )   
+VALUES
+    (10, NULL, 97, 1, 0.5, 0);
+	-- -- Category 3: Gaming Consoles
+INSERT INTO dbo.OrderItem(
+    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
+    )   
+VALUES
+    (1,NULL,49,5,699,0);
+
+INSERT INTO dbo.OrderItem(
+    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
+    )   
+VALUES
+    (2,NULL,50,7,699,0);
+
+INSERT INTO dbo.OrderItem(
+    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
+    )   
+VALUES
+    (3,NULL,51,2,799,0);
+
+INSERT INTO dbo.OrderItem(
+    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
+    )   
+VALUES
+    (4,NULL,52,2,799,0);
+
+-- -- Category 4: Furniture
+
+INSERT INTO dbo.OrderItem(
+    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
+    )   
+VALUES
+    (5,NULL,53,8,599,0);
+
+INSERT INTO dbo.OrderItem(
+    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
+    )   
+VALUES    
+    (6,NULL,54,2,599,0);
+
+INSERT INTO dbo.OrderItem(
+    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
+    )   
+VALUES  
+    (7,NULL,55,6,399,0);
+
+INSERT INTO dbo.OrderItem(
+    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
+    )   
+VALUES 
+    (8,NULL,56,1,399,0);
+
+INSERT INTO dbo.OrderItem(
+    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
+    )   
+VALUES    
+    (9,NULL,57,6,199,0);
+
+INSERT INTO dbo.OrderItem(
+    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
+    )   
+VALUES    
+    (11,NULL,58,2,199,0);
+
+INSERT INTO dbo.OrderItem(
+    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
+    )   
+VALUES
+    (12,NULL,59,1,199,0);
+
+INSERT INTO dbo.OrderItem(
+    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
+    )   
+VALUES   
+    (1,NULL,60,4,599,0);
+
+INSERT INTO dbo.OrderItem(
+    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
+    )   
+VALUES    
+    (2,NULL,61,8,399,0);
+
+INSERT INTO dbo.OrderItem(
+    orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
+    )   
+VALUES    
+    (3,NULL,62,3,399,0);
 INSERT INTO dbo.Invoice(
     orderID,invoiceStatus,invoiceDate -- 0 -not paid, 1 - partially paid, 2 - fully paid
     )   
@@ -1008,7 +1108,7 @@ INSERT INTO dbo.Payment(
 VALUES
     (1,123123123,50,'2021-12-25');
 
-    INSERT INTO dbo.Payment(
+INSERT INTO dbo.Payment(
     invoiceNumber,cardNumber,amount,paymentDate
     )   
 VALUES
@@ -1043,6 +1143,12 @@ INSERT INTO dbo.Payment(
     )   
 VALUES
     (10,234234234,1000,'2021-12-25');
+	
+INSERT INTO dbo.Payment(
+    invoiceNumber,cardNumber,amount,paymentDate
+    )   
+VALUES
+    (1,123123123,6756.5,'2021-12-25');
 
 INSERT INTO dbo.RestrictedTo(
     shopID, productTypeID

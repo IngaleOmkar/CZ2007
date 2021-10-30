@@ -1,9 +1,8 @@
---Given a customer by an email address, returns the product ids that have been ordered 
-and paid by this customer but not yet shipped.
+--Given a customer by an email address, returns the product ids that have been ordered  and paid by this customer but not yet shipped.
 
 SELECT o.productID FROM Customer c, OrderTable t, OrderItem o, Invoice i 
 WHERE c.CustID = t.CustID AND t.orderID = o.orderID AND o.orderID = i.orderID
-AND i.invoiceStatus = 1 
+AND i.invoiceStatus = 2 
 AND o.shipmentId IS NULL
 AND c.emailAddress = 'email address here';
 
@@ -15,7 +14,7 @@ WHERE p1.productTypeID = p2.parentID AND p1.parentID IS NULL;
 
 --Get 3 random customers and return their email addresses
 
-SELECT TOP 3 email_address FROM Customer
+SELECT TOP 3 emailAddress FROM Customer
 ORDER BY NEWID();
 
 
@@ -30,7 +29,6 @@ FULL JOIN Shop s ON s.shopID = MonthlyRevenue.shopID
 GROUP BY sName,invoiceYear,invoiceMonth
 ;
 
-
 -- 2) Get Top 3 productTypeID according to Quantity Sold
 
 SELECT TOP 3 p1.productTypeID, SUM(o1.quantity) as "Quantity Sold"
@@ -39,7 +37,7 @@ WHERE
 o1.orderID = or1.orderID
 AND or1.orderID = I1.orderID
 AND or1.orderID = o1.orderID
-AND or1.orderStatus = 1
+AND or1.orderStatus <> 2
 AND i1.invoiceStatus = 2
 AND o1.productID = p1.productID
 GROUP BY p1.productTypeID
@@ -74,3 +72,4 @@ SELECT i.orderID, COUNT(*) AS "Number Of Payment", SUM(p.amount) AS "Paid Amount
         WHERE i.orderID = p.invoiceNumber AND
         oi.orderID = i.orderID 
         GROUP BY i.orderID
+		
