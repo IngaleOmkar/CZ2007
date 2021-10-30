@@ -132,78 +132,7 @@ CREATE TABLE OrderItem(
     CHECK(unitPrice > 0), -- unit price cannot be below 0
     CHECK(itemStatus >= 0 AND itemStatus < 3) -- itemStatus must be within 0 and 2
 );
-GO;
+GO
 
-CREATE TRIGGER TRG
-ON OrderItem
-INSTEAD OF INSERT
-
-AS
-
-DECLARE @sid INT
-DECLARE @iid INT
-
-DECLARE @shipid INT
-DECLARE @pid INT
-DECLARE @qty INT
-DECLARE @up REAL
-DECLARE @istatus SMALLINT
-
-SELECT @iid=orderID FROM INSERTED
-SELECT @sid=sequenceNum FROM INSERTED
-SELECT @shipid=shipmentId FROM INSERTED
-SELECT @pid=productID FROM INSERTED
-SELECT @qty=quantity FROM INSERTED
-SELECT @up=unitPrice FROM INSERTED
-SELECT @istatus=itemStatus FROM INSERTED
-
-
---check if inserted AreaID exists in table -for setting SurfaceID
--- IF NOT EXISTS (SELECT * FROM OrderItem WHERE orderID=@iid)
--- SET @sid=1
--- ELSE
--- SET @sid=(  SELECT MAX(O.sequenceNum)+1 
---             FROM OrderItem O
---             WHERE O.orderID=@Iid
---           )
-
--- INSERT INTO OrderItem (orderID, sequenceNum, shipmentId, productID, quantity, unitPrice, itemStatus)
---             VALUES  (@iid,@sid,@shipid,@pid,@qty,@up,@istatus)
-
--- GO;
-
--- Set Sequence Num & Check When an invoice is issued(paid partially or fully), no more order item can be added to the order
-
--- Check if order is paid, item cannot be added anymore
-IF((SELECT SUM(i.invoiceStatus) 
-FROM OrderTable o, OrderItem oi, Invoice i
-WHERE (
-    i.orderID = @iid
-    AND oi.orderID = @iid
-    AND o.orderID = @iid
-)) <> 0) 
-ROLLBACK TRANSACTION
-
-
-IF (NOT EXISTS (SELECT * FROM OrderItem WHERE orderID=@iid))
-    SET @sid=1
-ELSE
-
-SET @sid=(  SELECT MAX(O.sequenceNum)+1 
-            FROM OrderItem O
-            WHERE O.orderID=@Iid
-        )
-
--- If there is already productId inside the orderTable, we update the quantity
-IF (NOT EXISTS (SELECT * FROM OrderItem WHERE (orderID=@iid) AND (productID=@pid)))
-    INSERT INTO OrderItem (orderID, sequenceNum, shipmentId, productID, quantity, unitPrice, itemStatus)
-                VALUES  (@iid,@sid,@shipid,@pid,@qty,@up,@istatus)
-ELSE
-    UPDATE OrderItem
-    SET quantity = quantity + @qty
-    WHERE orderID = @iid AND productID = @pid
-
-
-GO;
 
 

@@ -69,7 +69,7 @@ GO
 -- Check if payment exceed total amount, Third paymenmt must be full payment
 
 
-CREATE TRIGGER FullPayment 
+CREATE TRIGGER ThirdPayment 
 ON Payment
 INSTEAD OF INSERT
 AS 
@@ -77,12 +77,12 @@ BEGIN
 
 DECLARE @in INT
 DECLARE @cn INT
-DECLARE @am INT
+DECLARE @am REAL
 DECLARE @pd DATE
 
-DECLARE @ta INT -- Total Amount
-DECLARE @pa INT -- Paid Amount
-DECLARE @paTemp INT -- Paid Amount
+DECLARE @ta REAL -- Total Amount
+DECLARE @pa REAL -- Paid Amount
+DECLARE @paTemp REAL -- Paid Amount
 DECLARE @pn INT -- Payment Number
 
 SELECT @in=invoiceNumber FROM INSERTED
@@ -146,5 +146,51 @@ IF (@is != 0)
     ROLLBACK TRANSACTION
 
 END
+
+GO
+--SequenceNumber
+
+CREATE TRIGGER TRG
+ON OrderItem
+INSTEAD OF INSERT
+
+AS
+
+DECLARE @sid INT
+DECLARE @iid INT
+
+DECLARE @shipid INT
+DECLARE @pid INT
+DECLARE @qty INT
+DECLARE @up REAL
+DECLARE @istatus SMALLINT
+
+SELECT @iid=orderID FROM INSERTED
+SELECT @sid=sequenceNum FROM INSERTED
+SELECT @shipid=shipmentId FROM INSERTED
+SELECT @pid=productID FROM INSERTED
+SELECT @qty=quantity FROM INSERTED
+SELECT @up=unitPrice FROM INSERTED
+SELECT @istatus=itemStatus FROM INSERTED
+
+
+--check if inserted AreaID exists in table -for setting SurfaceID
+IF NOT EXISTS (SELECT * FROM OrderItem WHERE orderID=@iid)
+SET @sid=1
+ELSE
+SET @sid=(  SELECT MAX(O.sequenceNum)+1 
+             FROM OrderItem O
+             WHERE O.orderID=@Iid
+           )
+
+ INSERT INTO OrderItem (orderID, sequenceNum, shipmentId, productID, quantity, unitPrice, itemStatus)
+             VALUES  (@iid,@sid,@shipid,@pid,@qty,@up,@istatus)
+
+-- GO;
+
+-- Set Sequence Num & Check When an invoice is issued(paid partially or fully), no more order item can be added to the order
+
+-- Check if order is paid, item cannot be added anymore
+
 
 GO
