@@ -48,7 +48,7 @@ ORDER BY SUM(o1.quantity) DESC;
 
 -- 4) Find 2 product ids that are ordered together the most. 
 
-WITH Pair AS (SELECT DISTINCT or1.orderID,o1.productID AS productID1, o2.productID AS productID2
+;WITH Pair AS (SELECT DISTINCT or1.orderID,o1.productID AS productID1, o2.productID AS productID2
       FROM OrderTable or1, OrderItem o1, OrderItem o2
       WHERE 
       or1.orderID = o1.orderID
