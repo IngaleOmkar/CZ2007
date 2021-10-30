@@ -48,34 +48,29 @@ ORDER BY SUM(o1.quantity) DESC;
 
 -- 4) Find 2 product ids that are ordered together the most. 
 
-SELECT o1.productID, o2.productID, COUNT(*) as "Number Order Together"
-FROM OrderTable or1, OrderItem o1, OrderItem o2
-WHERE 
-or1.orderID = o1.orderID
-AND or1.orderID = o2.orderID
-AND o1.sequenceNum <> o2.sequenceNum
-AND o1.productID < o2.productID
-GROUP BY o1.productID, o2.productID
-HAVING COUNT(*) = (
-SELECT TOP 1 COUNT(*)
-FROM OrderTable or1, OrderItem o1, OrderItem o2
-WHERE 
-or1.orderID = o1.orderID
-AND or1.orderID = o2.orderID
-AND o1.sequenceNum <> o2.sequenceNum
-AND o1.productID < o2.productID
-GROUP BY o1.productID, o2.productID
-ORDER BY COUNT(o1.productID) DESC)
+WITH Pair AS (SELECT DISTINCT or1.orderID,o1.productID AS productID1, o2.productID AS productID2
+      FROM OrderTable or1, OrderItem o1, OrderItem o2
+      WHERE 
+      or1.orderID = o1.orderID
+      AND or1.orderID = o2.orderID
+      AND o1.sequenceNum <> o2.sequenceNum
+      AND o1.productID < o2.productID) 
+
+SELECT Pair.productID1, Pair.productID2, COUNT(*) AS 'Number Order Together'
+  FROM Pair
+  GROUP BY Pair.productID1,Pair.productID2
+  HAVING COUNT(*) = (
+    SELECT TOP 1 COUNT(*) AS 'Count'
+    FROM Pair
+      GROUP BY Pair.productID1,Pair.productID2
+      ORDER BY 'Count' DESC)
+  
 
 
---7) Get payment number for each product type 
+--7) Get Number Of Payment, Paid Amount, Total Amount and Unpaid Amount for every orderID
 
-SELECT pd.productTypeID, COUNT(p.invoiceNumber) AS "Number of Payment" , AVG(pd.price) AS "Average Product Price"
-FROM Invoice i, OrderTable ot , OrderItem oi, Payment p, Product pd
-WHERE i.invoiceStatus = 2
-AND i.orderID = ot.orderID
-AND oi.orderID = ot.orderID
-AND p.invoiceNumber = ot.orderID
-AND oi.productID = pd.productID
-GROUP BY pd.productTypeID 
-
+SELECT i.orderID, COUNT(*) AS "Number Of Payment", SUM(p.amount) AS "Paid Amount", SUM(oi.unitPrice*oi.quantity) AS "Total Amount" , (SUM(oi.unitPrice*oi.quantity)-SUM(p.amount)) as "Unpaid Amount"
+        FROM Invoice i, Payment p, OrderItem oi
+        WHERE i.orderID = p.invoiceNumber AND
+        oi.orderID = i.orderID 
+        GROUP BY i.orderID
