@@ -1,8 +1,9 @@
---Given a customer by an email address, returns the product ids that have been ordered  and paid by this customer but not yet shipped.
+--Given a customer by an email address, returns the product ids that have been ordered 
+and paid by this customer but not yet shipped.
 
 SELECT o.productID FROM Customer c, OrderTable t, OrderItem o, Invoice i 
 WHERE c.CustID = t.CustID AND t.orderID = o.orderID AND o.orderID = i.orderID
-AND i.invoiceStatus = 2 
+AND i.invoiceStatus = 1 
 AND o.shipmentId IS NULL
 AND c.emailAddress = 'email address here';
 
@@ -14,7 +15,7 @@ WHERE p1.productTypeID = p2.parentID AND p1.parentID IS NULL;
 
 --Get 3 random customers and return their email addresses
 
-SELECT TOP 3 emailAddress FROM Customer
+SELECT TOP 3 email_address FROM Customer
 ORDER BY NEWID();
 
 
@@ -29,6 +30,7 @@ FULL JOIN Shop s ON s.shopID = MonthlyRevenue.shopID
 GROUP BY sName,invoiceYear,invoiceMonth
 ;
 
+
 -- 2) Get Top 3 productTypeID according to Quantity Sold
 
 SELECT TOP 3 p1.productTypeID, SUM(o1.quantity) as "Quantity Sold"
@@ -37,7 +39,7 @@ WHERE
 o1.orderID = or1.orderID
 AND or1.orderID = I1.orderID
 AND or1.orderID = o1.orderID
-AND or1.orderStatus <> 2
+AND or1.orderStatus = 1
 AND i1.invoiceStatus = 2
 AND o1.productID = p1.productID
 GROUP BY p1.productTypeID
@@ -57,7 +59,7 @@ ORDER BY SUM(o1.quantity) DESC;
 SELECT Pair.productID1, Pair.productID2, COUNT(*) AS 'Number Order Together'
   FROM Pair
   GROUP BY Pair.productID1,Pair.productID2
-  HAVING COUNT(*) = (
+  HAVING COUNT(*) = (`
     SELECT TOP 1 COUNT(*) AS 'Count'
     FROM Pair
       GROUP BY Pair.productID1,Pair.productID2
@@ -67,9 +69,26 @@ SELECT Pair.productID1, Pair.productID2, COUNT(*) AS 'Number Order Together'
 
 --7) Get Number Of Payment, Paid Amount, Total Amount and Unpaid Amount for every orderID
 
-SELECT i.orderID, COUNT(*) AS "Number Of Payment", SUM(p.amount) AS "Paid Amount", SUM(oi.unitPrice*oi.quantity) AS "Total Amount" , (SUM(oi.unitPrice*oi.quantity)-SUM(p.amount)) as "Unpaid Amount"
-        FROM Invoice i, Payment p, OrderItem oi
-        WHERE i.orderID = p.invoiceNumber AND
-        oi.orderID = i.orderID 
-        GROUP BY i.orderID
-		
+;WITH Temp AS (
+SELECT * 
+    FROM ( SELECT i.orderID, COUNT(*) AS "Number Of Payment"
+    FROM Invoice i, Payment p
+    WHERE i.orderID = p.invoiceNumber 
+    GROUP BY i.orderID) AS A
+
+    LEFT JOIN ( SELECT  oi.orderID as "orderID1", SUM(oi.unitPrice*oi.quantity) AS "Total Amount" 
+            FROM OrderItem oi
+            GROUP BY oi.orderID)  AS B
+    ON A.orderId=B.orderId1
+
+    LEFT JOIN ( SELECT  p.invoiceNumber as "orderID2", SUM(p.amount) AS "Paid Amount"
+            FROM Payment p
+            GROUP BY p.invoiceNumber)  AS C
+
+    ON A.orderId=C.orderId2
+)
+
+SELECT orderID, [Number Of Payment], [Total Amount], [Paid Amount], [Total Amount] - [Paid Amount] AS "Unpaid Amount"
+FROM Temp
+
+
