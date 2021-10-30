@@ -140,8 +140,6 @@ SELECT @oi=orderID FROM INSERTED
 
 SET @is = (SELECT invoiceStatus FROM Invoice WHERE Invoice.orderID = @oi)
 
-
--- Check if payment exceed total amount and check if third payment is full
 IF (@is != 0)
     ROLLBACK TRANSACTION
 
