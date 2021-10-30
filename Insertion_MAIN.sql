@@ -1148,7 +1148,7 @@ INSERT INTO dbo.Payment(
     invoiceNumber,cardNumber,amount,paymentDate
     )   
 VALUES
-    (1,123123123,6756.5,'2021-12-25');
+    (1,123123123,6744.5,'2021-12-25');
 
 INSERT INTO dbo.RestrictedTo(
     shopID, productTypeID

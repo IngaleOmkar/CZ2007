@@ -59,13 +59,12 @@ ORDER BY SUM(o1.quantity) DESC;
 SELECT Pair.productID1, Pair.productID2, COUNT(*) AS 'Number Order Together'
   FROM Pair
   GROUP BY Pair.productID1,Pair.productID2
-  HAVING COUNT(*) = (`
+  HAVING COUNT(*) = (
     SELECT TOP 1 COUNT(*) AS 'Count'
     FROM Pair
       GROUP BY Pair.productID1,Pair.productID2
       ORDER BY 'Count' DESC)
   
-
 
 --7) Get Number Of Payment, Paid Amount, Total Amount and Unpaid Amount for every orderID
 
@@ -90,5 +89,4 @@ SELECT *
 
 SELECT orderID, [Number Of Payment], [Total Amount], [Paid Amount], [Total Amount] - [Paid Amount] AS "Unpaid Amount"
 FROM Temp
-
 

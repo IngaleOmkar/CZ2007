@@ -118,34 +118,26 @@ END
 GO
 
 
-
 -- Check if payment of an order is paid, it cannot be cancel anymore.
-CREATE TRIGGER CancelPaid
+ALTER TRIGGER CancelPaid
 ON OrderTable
-INSTEAD OF UPDATE
+AFTER UPDATE
 AS 
 BEGIN
 
-DECLARE @ci INT
-DECLARE @od INT
-DECLARE @os INT
-DECLARE @oi INT
+IF UPDATE(orderStatus)
+	IF ((SELECT orderStatus From Inserted) = 2)
+		IF ((SELECT SUM(p.amount) FROM Payment p WHERE p.invoiceNumber = (SELECT orderID FROM Inserted)) > 0)
+			BEGIN
+			;THROW 51000, 'Cannot cancel order that is paid (partially/fully)',1 
+			UPDATE OrderTable SET orderStatus = (SELECT orderStatus FROM Deleted)
+			END
 
-DECLARE @is SMALLINT --Invoice Status
-
-SELECT @ci=custId FROM INSERTED
-SELECT @od=orderDate FROM INSERTED
-SELECT @os=orderStatus FROM INSERTED
-SELECT @oi=orderID FROM INSERTED
-
-SET @is = (SELECT invoiceStatus FROM Invoice WHERE Invoice.orderID = @oi)
-
-IF (@is != 0)
-    ROLLBACK TRANSACTION
 
 END
 
 GO
+
 --SequenceNumber
 
 CREATE TRIGGER TRG
