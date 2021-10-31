@@ -94,8 +94,9 @@ SET @pn = (SELECT COUNT(*) FROM Payment WHERE Payment.invoiceNumber = @in)
 
 -- Total Amount
 SET @ta = (SELECT SUM(OrderItem.unitPrice*OrderItem.quantity) 
-FROM Invoice, OrderItem 
-WHERE OrderItem.orderID=Invoice.orderID AND Invoice.invoiceNum=@in)
+FROM OrderItem 
+WHERE OrderItem.orderID=@in)
+
 
 -- Paid Amount
 SET @paTemp = (SELECT SUM(amount) FROM Payment WHERE Payment.invoiceNumber=@in)

@@ -70,23 +70,27 @@ SELECT Pair.productID1, Pair.productID2, COUNT(*) AS 'Number Order Together'
 
 ;WITH Temp AS (
 SELECT * 
-    FROM ( SELECT i.orderID, COUNT(*) AS "Number Of Payment"
+    FROM ( SELECT  oi.orderID as "orderID", SUM(oi.unitPrice*oi.quantity) AS "Total Amount" 
+            FROM OrderItem oi
+            GROUP BY oi.orderID ) AS A
+
+    LEFT JOIN ( SELECT i.orderID as "orderID1", COUNT(*) AS "Number Of Payment"
     FROM Invoice i, Payment p
     WHERE i.orderID = p.invoiceNumber 
-    GROUP BY i.orderID) AS A
+    GROUP BY i.orderID)  AS B
 
-    LEFT JOIN ( SELECT  oi.orderID as "orderID1", SUM(oi.unitPrice*oi.quantity) AS "Total Amount" 
-            FROM OrderItem oi
-            GROUP BY oi.orderID)  AS B
     ON A.orderId=B.orderId1
 
     LEFT JOIN ( SELECT  p.invoiceNumber as "orderID2", SUM(p.amount) AS "Paid Amount"
             FROM Payment p
             GROUP BY p.invoiceNumber)  AS C
 
-    ON A.orderId=C.orderId2
+    ON A.orderID=C.orderId2
 )
+
 
 SELECT orderID, [Number Of Payment], [Total Amount], [Paid Amount], [Total Amount] - [Paid Amount] AS "Unpaid Amount"
 FROM Temp
 
+
+SELECT * FROM Invoice
