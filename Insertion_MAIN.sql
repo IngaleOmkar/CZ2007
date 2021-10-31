@@ -556,7 +556,7 @@ INSERT INTO dbo.OrderItem(
     orderID,shipmentId,productID,quantity,unitPrice,itemStatus -- 2 out of stock
     )   
 VALUES
-    (1,NULL,2,5,10.5,0);
+    (2,NULL,3,5,10.5,0);
 
 
 INSERT INTO dbo.OrderItem(
