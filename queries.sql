@@ -89,8 +89,7 @@ SELECT *
 )
 
 
-SELECT orderID, [Number Of Payment], [Total Amount], [Paid Amount], [Total Amount] - [Paid Amount] AS "Unpaid Amount"
+
+SELECT orderID,  ISNULL([Number Of Payment], 0 ) AS "Number Of Payment", ISNULL([Total Amount], 0 ) AS "Total Amount", ISNULL([Paid Amount], 0 ) AS "Paid Amount", ISNULL([Total Amount], 0 ) - ISNULL([Paid Amount], 0 ) AS "Unpaid Amount"
 FROM Temp
 
-
-SELECT * FROM Invoice
