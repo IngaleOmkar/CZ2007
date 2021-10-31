@@ -39,7 +39,7 @@ WHERE
 o1.orderID = or1.orderID
 AND or1.orderID = I1.orderID
 AND or1.orderID = o1.orderID
-AND or1.orderStatus = 1
+AND or1.orderStatus <> 2
 AND i1.invoiceStatus = 2
 AND o1.productID = p1.productID
 GROUP BY p1.productTypeID
