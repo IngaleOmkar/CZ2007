@@ -119,7 +119,7 @@ GO
 
 
 -- Check if payment of an order is paid, it cannot be cancel anymore.
-ALTER TRIGGER CancelPaid
+CREATE TRIGGER CancelPaid
 ON OrderTable
 AFTER UPDATE
 AS 
