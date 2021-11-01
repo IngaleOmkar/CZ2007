@@ -1,5 +1,5 @@
 --Given a customer by an email address, returns the product ids that have been ordered 
-and paid by this customer but not yet shipped.
+-- and paid by this customer but not yet shipped.
 
 SELECT o.productID FROM Customer c, OrderTable t, OrderItem o, Invoice i 
 WHERE c.CustID = t.CustID AND t.orderID = o.orderID AND o.orderID = i.orderID
@@ -15,7 +15,7 @@ WHERE p1.productTypeID = p2.parentID AND p1.parentID IS NULL;
 
 --Get 3 random customers and return their email addresses
 
-SELECT TOP 3 email_address FROM Customer
+SELECT TOP 3 emailAddress FROM Customer
 ORDER BY NEWID();
 
 
@@ -39,7 +39,7 @@ WHERE
 o1.orderID = or1.orderID
 AND or1.orderID = I1.orderID
 AND or1.orderID = o1.orderID
-AND or1.orderStatus = 1
+AND or1.orderStatus <> 2
 AND i1.invoiceStatus = 2
 AND o1.productID = p1.productID
 GROUP BY p1.productTypeID
@@ -66,11 +66,30 @@ SELECT Pair.productID1, Pair.productID2, COUNT(*) AS 'Number Order Together'
       ORDER BY 'Count' DESC)
   
 
-
 --7) Get Number Of Payment, Paid Amount, Total Amount and Unpaid Amount for every orderID
 
-SELECT i.orderID, COUNT(*) AS "Number Of Payment", SUM(p.amount) AS "Paid Amount", SUM(oi.unitPrice*oi.quantity) AS "Total Amount" , (SUM(oi.unitPrice*oi.quantity)-SUM(p.amount)) as "Unpaid Amount"
-        FROM Invoice i, Payment p, OrderItem oi
-        WHERE i.orderID = p.invoiceNumber AND
-        oi.orderID = i.orderID 
-        GROUP BY i.orderID
+;WITH Temp AS (
+SELECT * 
+    FROM ( SELECT  oi.orderID as "orderID", SUM(oi.unitPrice*oi.quantity) AS "Total Amount" 
+            FROM OrderItem oi
+            GROUP BY oi.orderID ) AS A
+
+    LEFT JOIN ( SELECT i.orderID as "orderID1", COUNT(*) AS "Number Of Payment"
+    FROM Invoice i, Payment p
+    WHERE i.orderID = p.invoiceNumber 
+    GROUP BY i.orderID)  AS B
+
+    ON A.orderId=B.orderId1
+
+    LEFT JOIN ( SELECT  p.invoiceNumber as "orderID2", SUM(p.amount) AS "Paid Amount"
+            FROM Payment p
+            GROUP BY p.invoiceNumber)  AS C
+
+    ON A.orderID=C.orderId2
+)
+
+
+
+SELECT orderID,  ISNULL([Number Of Payment], 0 ) AS "Number Of Payment", ISNULL([Total Amount], 0 ) AS "Total Amount", ISNULL([Paid Amount], 0 ) AS "Paid Amount", ISNULL([Total Amount], 0 ) - ISNULL([Paid Amount], 0 ) AS "Unpaid Amount"
+FROM Temp
+
