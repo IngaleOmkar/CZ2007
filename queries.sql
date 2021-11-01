@@ -1,5 +1,5 @@
 --Given a customer by an email address, returns the product ids that have been ordered 
-and paid by this customer but not yet shipped.
+-- and paid by this customer but not yet shipped.
 
 SELECT o.productID FROM Customer c, OrderTable t, OrderItem o, Invoice i 
 WHERE c.CustID = t.CustID AND t.orderID = o.orderID AND o.orderID = i.orderID
@@ -15,7 +15,7 @@ WHERE p1.productTypeID = p2.parentID AND p1.parentID IS NULL;
 
 --Get 3 random customers and return their email addresses
 
-SELECT TOP 3 email_address FROM Customer
+SELECT TOP 3 emailAddress FROM Customer
 ORDER BY NEWID();
 
 
