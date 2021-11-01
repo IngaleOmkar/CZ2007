@@ -6,7 +6,8 @@ INSERT INTO dbo.Photo(
     shopId, content, productID
 )
 VALUES
-    (1, (SELECT 'jpg',IMAGE FROM OPENROWSET(BULK N'omkaringale/Desktop/Y2S1/Databases/SQLProjects/Project/CZ2007/Images/laptop.jpg', SINGLE_BLOB) AS IMAGE), 1);
+    (1, LOAD_FILE('Images/phone.jpg'), 1);
+    (1, (SELECT IMAGE FROM OPENROWSET(BULK N'omkaringale/Desktop/Y2S1/Databases/SQLProjects/Project/CZ2007/Images/laptop.jpg', SINGLE_BLOB) AS IMAGE), 1);
 
     (1, 'iPhone XS Max is a 6.5 inch display phone.', 'iPhone XS Max', 'Gold', 'Large', '799', 1),
     (1, 'iPhone XS Max is a 6.5 inch display phone.', 'iPhone XS Max', 'Space Grey', 'Large', '799', 2),
