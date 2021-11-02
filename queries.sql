@@ -89,7 +89,26 @@ SELECT *
 )
 
 
+-- 8) Additional 
 
 SELECT orderID,  ISNULL([Number Of Payment], 0 ) AS "Number Of Payment", ISNULL([Total Amount], 0 ) AS "Total Amount", ISNULL([Paid Amount], 0 ) AS "Paid Amount", ISNULL([Total Amount], 0 ) - ISNULL([Paid Amount], 0 ) AS "Unpaid Amount"
 FROM Temp
 
+;WITH Pair AS (SELECT DISTINCT or1.orderID AS orderID1, or2.orderID AS orderID2 ,o1.productID AS productID1, o2.productID AS productID2, or1.custID
+      FROM OrderTable or1, OrderTable or2, OrderItem o1, OrderItem o2
+      WHERE 
+      or1.orderID = o1.orderID
+      AND or2.orderID = o2.orderID
+      AND or1.custID = or2.custID
+      AND o1.productID < o2.productID
+      AND o1.productID = 2) 
+
+SELECT DISTINCT p.productID2
+FROM Pair p, ProductType pt1, ProductType pt2, product pro1, product pro2
+WHERE p.productID1 = pro1.productID
+AND   p.productID2 = pro2.productID
+AND   (pro1.productTypeID = pro2.productTypeID 
+
+OR    (pt1.productTypeID = pro1.productTypeID
+AND    pt2.productTypeID = pro2.productTypeID
+AND    pt2.parentID = pt1.parentID) )
